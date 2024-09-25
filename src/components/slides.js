@@ -1,4 +1,4 @@
-const slides =[
+export const slides =[
     {
         key: 1,
         title: 'Stronger security',
