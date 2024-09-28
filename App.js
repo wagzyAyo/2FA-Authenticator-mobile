@@ -15,10 +15,10 @@ const handleDone = () =>{
     
     <View style={styles.container}>
       {
-      showOnboarding ? (<Onboarding onDone={handleDone}/>)
+      showOnboarding ? (<Onboarding />)
       :
       <view>
-        <Text>Open up App.js to start working on your app!</Text>
+        <Text>Home</Text>
         <StatusBar style="auto" />
       </view>
     }
@@ -33,5 +33,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    padding: 16,
   },
 });
