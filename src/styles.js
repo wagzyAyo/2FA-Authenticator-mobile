@@ -1,6 +1,6 @@
-import { Dimensions } from "react-native";
+// import { Dimensions } from "react-native";
 
-const {width , height } = Dimensions.screen;
+// const {width , height } = Dimensions.screen;
 
 
 export const COLORS = {
