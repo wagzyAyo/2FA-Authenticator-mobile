@@ -41,7 +41,31 @@ const [passwordVisible, setPasswordVisible] = useState("false")
                 </TouchableOpacity>
             </View>
             
+            <View style={styles.fingerPrint}>
+                <MaterialIcons  name="fingerprint" size={26} color={SIZES.surface}/>
+            </View>
+
+            <View>
+                <TouchableOpacity style={styles.btn}>
+                    <Text style={styles.btnText}>Login</Text>
+                </TouchableOpacity>
+            </View>
             
+            <Text style={styles.option}>
+                or
+            </Text>
+
+            <View>
+                <TouchableOpacity style={styles.btnStroke}>
+                    <Text style={styles.btnTextStroke}>Continue with google
+                        <Image source={require('../../assets/googleIcon.png')} style={styles.icon}/>
+                    </Text>
+                </TouchableOpacity>
+            </View>
+
+            <Text style={styles.navSignup}>
+                Dont have an account? signup
+            </Text>
         </View>
     )
 }
@@ -96,5 +120,58 @@ const styles = StyleSheet.create({
         position: "absolute",
         right: 10,
         top: 20,
+    },
+    fingerPrint: {
+        marginTop: 32,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 32,
+    },
+    btn: {
+        width: SIZES.width - 32,
+        paddingRight: 10,
+        paddingLeft: 10,
+        paddingTop: 16,
+        paddingBottom: 16,
+        backgroundColor: COLORS.primary,
+        borderRadius: 8,
+    },
+    btnText: {
+        fontSize: SIZES.button,
+        letterSpacing: 1.25,
+        color: COLORS.background,
+        textAlign: 'center'
+    },
+    option: {
+        marginTop: 24,
+        textAlign: 'center'
+    },
+    btnStroke: {
+        width: SIZES.width - 32,
+        borderWidth: 1,
+        borderColor: COLORS.primary,
+        paddingRight: 10,
+        paddingLeft: 10,
+        paddingTop: 16,
+        paddingBottom: 16,
+        borderRadius: 8,
+        color: COLORS.surface,
+        marginTop: 24
+    },
+    icon: {
+        width: 15,
+        height: 13,
+    },
+    btnTextStroke: {
+        color: COLORS.surface,
+        display: 'flex',
+        textAlign: 'center',
+    },
+
+    navSignup: {
+        textAlign: 'center',
+        fontSize: SIZES.bodyLarge,
+        letterSpacing: 0.5,
+        marginTop: 32,
     }
 })
