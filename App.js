@@ -6,11 +6,17 @@ import { slides } from './src/slides';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import NextBtn from './src/components/nextBtn';
 import LoginScreen from './src/screens/loginScreen';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Home from './src/screens/Home';
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
+  
 
   const [showhome, setShowHome] = useState(false);
-  const [authenticated, setAuthenticated] = useState(true);
+  const [authenticated, setAuthenticated] = useState(false);
 
   const btnLabel = (label) =>{
     return (
@@ -59,15 +65,20 @@ export default function App() {
     )
   }
   return (
+    
     <View >
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName='Home'>
+          <Stack.Screen name='Home' component={Home}/>
+          <Stack.Screen name='Login' component={LoginScreen}/>
+        </Stack.Navigator>
+      </NavigationContainer>
       {authenticated ? 
       (<LoginScreen />) 
       :
 
       (
-        <View style={styles.container}> 
-          <Text style={styles.text}>Home page</Text>
-        </View>
+        <Home />
       )
     }
       
