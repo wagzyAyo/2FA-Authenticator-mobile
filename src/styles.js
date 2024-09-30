@@ -1,6 +1,6 @@
-// import { Dimensions } from "react-native";
+import { Dimensions } from "react-native";
 
-// const {width , height } = Dimensions.screen;
+const {width , height } = Dimensions.get('screen');
 
 
 export const COLORS = {
@@ -10,7 +10,7 @@ export const COLORS = {
     surface: "#000000"
 }
 
-export const typo = {
+export const SIZES = {
     h1: 33,
     h2: 23,
     h3: 19,
@@ -18,4 +18,7 @@ export const typo = {
     bodySmall: 14,
     button: 14,
     caption: 12,
+
+    width,
+    height
 }
