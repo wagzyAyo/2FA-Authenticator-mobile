@@ -3,11 +3,13 @@ import { Text, View, StyleSheet, TextInput, Image, TouchableOpacity } from "reac
 import { COLORS, SIZES } from "../styles";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
-export default function LoginScreen ({navigation}) {
+export default function SignUpScreen ({navigation}) {
 
 const [email, setEmail] = useState("");
 const [password, setPassword] = useState("");
+const [confirmPassword, setConfirmPassword] = useState("");
 const [passwordVisible, setPasswordVisible] = useState("false")
+const [passwordVisible2, setPasswordVisible2] = useState("false")
 
     
     return (
@@ -16,7 +18,7 @@ const [passwordVisible, setPasswordVisible] = useState("false")
             <Image source={require('../../assets/alpha.png')} style={styles.logoImg}/>
             </View>
            
-            <Text style={styles.title}>Login into your account</Text>
+            <Text style={styles.title}>Create your account</Text>
             <TextInput style={styles.input} 
               placeholder="Email"
               onChangeText={(text) => setEmail(text)}
@@ -40,14 +42,31 @@ const [passwordVisible, setPasswordVisible] = useState("false")
                     />
                 </TouchableOpacity>
             </View>
-            
-            <View style={styles.fingerPrint}>
-                <MaterialIcons  name="fingerprint" size={26} color={SIZES.surface}/>
+
+            <View style={styles.inputContainer}>
+                <TextInput style={styles.inputPassword} 
+                placeholder="confirm Password"
+                onChangeText={(text) => setConfirmPassword(text)}
+                value={confirmPassword}
+                secureTextEntry={!passwordVisible2}
+                />
+                 <TouchableOpacity
+                    style={styles.eyeIcon}
+                    onPress={() => setPasswordVisible2(!passwordVisible2)} // Toggle password visibility
+                >
+                    <MaterialIcons
+                        name={passwordVisible2 ? "visibility-off" : "visibility"}
+                        size={24}
+                        color={COLORS.surface}
+                    />
+                </TouchableOpacity>
             </View>
+            
+            
 
             <View>
                 <TouchableOpacity style={styles.btn}>
-                    <Text style={styles.btnText}>Login</Text>
+                    <Text style={styles.btnText}>Sign up</Text>
                 </TouchableOpacity>
             </View>
             
@@ -63,8 +82,9 @@ const [passwordVisible, setPasswordVisible] = useState("false")
                 </TouchableOpacity>
             </View>
 
-            <Text style={styles.navSignup} onPress={()=> navigation.navigate('SignUp')}>
-                Dont have an account? signup
+            <Text style={styles.navSignup} 
+            onPress={() => navigation.navigate('Login')}>
+            Already have an account? Login
             </Text>
         </View>
     )
@@ -121,12 +141,6 @@ const styles = StyleSheet.create({
         right: 10,
         top: 20,
     },
-    fingerPrint: {
-        marginTop: 32,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginBottom: 32,
-    },
     btn: {
         width: SIZES.width - 32,
         paddingRight: 10,
@@ -135,6 +149,7 @@ const styles = StyleSheet.create({
         paddingBottom: 16,
         backgroundColor: COLORS.primary,
         borderRadius: 8,
+        marginTop: 40,
     },
     btnText: {
         fontSize: SIZES.button,

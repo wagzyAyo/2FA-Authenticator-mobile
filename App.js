@@ -9,6 +9,7 @@ import LoginScreen from './src/screens/loginScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from './src/screens/Home';
+import SignUpScreen from './src/screens/signUp';
 
 const Stack = createNativeStackNavigator();
 
@@ -65,25 +66,29 @@ export default function App() {
     )
   }
   return (
-    
-    <View >
       <NavigationContainer>
-        <Stack.Navigator initialRouteName='Home'>
-          <Stack.Screen name='Home' component={Home}/>
-          <Stack.Screen name='Login' component={LoginScreen}/>
+        <Stack.Navigator 
+        initialRouteName={authenticated ? 'Home' : 'Login'}
+        screenOptions={
+          {
+            headerShown: false
+          }
+        }
+        >
+          {authenticated ?
+          (<Stack.Screen name='Home' component={Home}/>)
+          :
+          (
+            <>
+              <Stack.Screen name='Login' component={LoginScreen}/>
+              <Stack.Screen name='SignUp' component={SignUpScreen}/>
+            </>
+          )
+        }
         </Stack.Navigator>
+        <StatusBar style="auto" />
       </NavigationContainer>
-      {authenticated ? 
-      (<LoginScreen />) 
-      :
-
-      (
-        <Home />
-      )
-    }
       
-      <StatusBar style="auto" />
-    </View>
   );
 }
 
