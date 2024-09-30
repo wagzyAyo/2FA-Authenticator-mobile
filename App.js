@@ -5,10 +5,23 @@ import { SIZES, COLORS } from './src/styles';
 import { slides } from './src/slides';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import NextBtn from './src/components/nextBtn';
+import LoginScreen from './src/screens/loginScreen';
 
 export default function App() {
 
-  const [showhome, setShowHome] = useState(false)
+  const [showhome, setShowHome] = useState(false);
+  const [authenticated, setAuthenticated] = useState(true);
+
+  const btnLabel = (label) =>{
+    return (
+      <View style={styles.label}>
+      <Text style={styles.labelText}>
+        {label}
+      </Text>
+    </View>
+    )
+    
+  }
 
   if(!showhome){
     return (
@@ -37,14 +50,27 @@ export default function App() {
         activeDotStyle={{
           backgroundColor: COLORS.primary
         }}
-        onDone={() => setShowHome = true}
+        onDone={() => setShowHome(!showhome)}
+        showSkipButton
+        renderSkipButton={() => btnLabel("Skip")}
         renderNextButton={() => <NextBtn />}
+        renderDoneButton= {() => btnLabel("Done")}
       />
     )
   }
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Home</Text>
+    <View >
+      {authenticated ? 
+      (<LoginScreen />) 
+      :
+
+      (
+        <View style={styles.container}> 
+          <Text style={styles.text}>Home page</Text>
+        </View>
+      )
+    }
+      
       <StatusBar style="auto" />
     </View>
   );
@@ -73,6 +99,13 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginTop: 32,
     fontSize: SIZES.bodySmall,
-
+  },
+  label:{
+    padding: 12,
+  },
+  labelText: {
+    fontSize: SIZES.bodyLarge,
+    color: COLORS.surface,
+    letterSpacing: 0.5
   }
 });
