@@ -1,19 +1,33 @@
-import { View,Text, StyleSheet } from "react-native";
+import { View,Text, StyleSheet, Image } from "react-native";
 import { COLORS, SIZES } from "../styles";
+
 
 export default function Home() {
     return (
         <View >
-            <Text style={styles.text}>Home Page</Text>
+            <View  style={styles.imgContainer}>
+                <Image  source={require("../../assets/noCode.png")} style={styles.img} />
+            </View>
+            <Text style={styles.text}>No codes here yet. Add new code</Text>
             
         </View>
     )
 }
 
 styles = StyleSheet.create({
+    imgContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 300,
+    },
+    img:{
+        width: 200,
+        height: 200,
+    },
       text: {
         textAlign: "center",
-        fontSize: SIZES.h2,
-        marginTop: SIZES.height / 2
+        fontSize: SIZES.bodySmall,
+        marginTop: 100,
       }
 })

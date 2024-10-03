@@ -17,7 +17,7 @@ export default function App() {
   
 
   const [showhome, setShowHome] = useState(false);
-  const [authenticated, setAuthenticated] = useState(false);
+  const [authenticated, setAuthenticated] = useState(true);
 
   const btnLabel = (label) =>{
     return (
