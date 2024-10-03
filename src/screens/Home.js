@@ -1,5 +1,6 @@
 import { View,Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { COLORS, SIZES } from "../styles";
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
 
 export default function Home() {
@@ -13,7 +14,14 @@ export default function Home() {
             <TouchableOpacity style={styles.btn}>
                 <Text style={styles.btnText}>Add code</Text>
             </TouchableOpacity>
-            
+            <TouchableOpacity style={styles.roundBtn}>
+                <MaterialIcons
+                    name="add"
+                    size={35}
+                    color={COLORS.background}
+                    style={styles.add}
+                />
+            </TouchableOpacity>
         </View>
     )
 }
@@ -61,5 +69,24 @@ styles = StyleSheet.create({
         letterSpacing: 1.25,
         color: COLORS.background,
         textAlign: 'center'
+    },
+    roundBtn: {
+        position: 'fixed',
+        top: 70,
+        left: SIZES.width - 72,
+        width: 58,
+        height: 58,
+        borderRadius: 50,
+        backgroundColor: COLORS.primary,
+        justifyContent: 'center',
+        alignItems: 'center',
+        shadowColor: '#000000',
+        shadowOffset: {
+            width: 0,
+            height: 8,
+        },
+        shadowRadius: 10,
+        shadowOpacity: 0.20,
+        elevation: 5,
     },
 })
