@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Text, View, StyleSheet, TextInput, Image, TouchableOpacity } from "react-native"
+import { Text, View, StyleSheet, TextInput, Image, TouchableOpacity, Alert } from "react-native"
 import { COLORS, SIZES } from "../styles";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
@@ -11,6 +11,39 @@ const [confirmPassword, setConfirmPassword] = useState("");
 const [passwordVisible, setPasswordVisible] = useState("false")
 const [passwordVisible2, setPasswordVisible2] = useState("false")
 
+
+const handleSignup = async ()=>{
+    if (email && password && confirmPassword){
+        try {
+            if (password == confirmPassword){
+                const response = await fetch('http://192.168.90.218:5000/api/auth/signup', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        password: password
+                    }),
+                })
+            
+                const data = await response.json();
+                if(response.status == 200){
+                    Alert.alert('success', data.message)
+                    navigation.navigate('Home')
+                }else{
+                    Alert.alert('Sign up failed:', data.message)
+                }
+            }else{
+                Alert.alert('Password do not match')
+            }
+        } catch (err) {
+            Alert.alert('Error Signing up', err)
+        }
+    }else{
+        Alert.alert('Email, Password and Confirm password fields are required')
+    }
+}
     
     return (
         <View style={styles.container}>
@@ -65,7 +98,7 @@ const [passwordVisible2, setPasswordVisible2] = useState("false")
             
 
             <View>
-                <TouchableOpacity style={styles.btn}>
+                <TouchableOpacity style={styles.btn} onPress={handleSignup}>
                     <Text style={styles.btnText}>Sign up</Text>
                 </TouchableOpacity>
             </View>
