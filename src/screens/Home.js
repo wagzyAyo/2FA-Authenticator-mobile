@@ -26,11 +26,12 @@ export default function Home() {
             <TouchableOpacity style={styles.roundBtn}>
                 <MaterialIcons
                     name="add"
-                    size={35}
+                    size={30}
                     color={COLORS.background}
                     style={styles.add}
                 />
             </TouchableOpacity>
+            
         </View>
     )
 }
@@ -55,8 +56,8 @@ styles = StyleSheet.create({
         color: COLORS.surface
     },
     roundBtn: {
-        position: 'fixed',
-        top: 70,
+        position: 'absolute',
+        bottom: -SIZES.height * 20/100,
         left: SIZES.width - 72,
         width: 58,
         height: 58,
