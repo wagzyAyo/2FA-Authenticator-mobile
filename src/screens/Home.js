@@ -9,7 +9,16 @@ export default function Home() {
     const [codes, setCodes] = useState(false)
     return (
         <View >
+            <View style={styles.topNav}>
+            <MaterialIcons
+              name={"menu-open"}
+              size={30}
+              color={COLORS.surface}
+              style={styles.menu}
+            />
             <Text style={styles.textTitle}>Alpha <Text style={styles.text2}>Authenticator</Text></Text>
+            </View>
+            
             {!codes ? 
             (<NoCode />) :
             (<Text>Codes</Text>)
@@ -27,9 +36,16 @@ export default function Home() {
 }
 
 styles = StyleSheet.create({
-    textTitle: {
+    topNav: {
+        flexDirection: 'row',
+        alignItems: 'center',
         position: "relative",
         top: 50,
+    },
+    menu: {
+        paddingLeft: 16
+    },
+    textTitle: {
         left: SIZES.width / 4,
         fontSize: SIZES.h2,
         fontWeight: "bold",
