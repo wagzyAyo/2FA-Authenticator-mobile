@@ -13,6 +13,7 @@
     "@react-navigation/native-stack": "^6.11.0",
     "expo": "~51.0.28",
     "expo-status-bar": "~1.12.1",
+    "fetch": "^1.1.0",
     "react": "18.2.0",
     "react-native": "0.74.5",
     "react-native-app-intro-slider": "^4.0.4",

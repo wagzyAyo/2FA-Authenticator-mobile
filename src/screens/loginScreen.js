@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Text, View, StyleSheet, TextInput, Image, TouchableOpacity } from "react-native"
+import { Text, View, StyleSheet, TextInput, Image, TouchableOpacity, Alert } from "react-native"
 import { COLORS, SIZES } from "../styles";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
@@ -7,7 +7,35 @@ export default function LoginScreen ({navigation}) {
 
 const [email, setEmail] = useState("");
 const [password, setPassword] = useState("");
-const [passwordVisible, setPasswordVisible] = useState("false")
+const [passwordVisible, setPasswordVisible] = useState("false");
+
+
+const handleLogin = async ()=>{
+    if (email && password){
+        try {
+            const response = await fetch('http://192.168.90.218/api/auth/login', {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    email: email,
+                    password: password
+                }),
+            })
+            const data = await response.json();
+            if (response.status == 200){
+                navigation.navigate('Home')
+            }else{
+                Alert.alert(`Login fail: ${data.message}`)
+            }
+        } catch (err) {
+            Alert.alert(`Error: ${err}`)
+        }
+    }else{
+        Alert.alert("Enter both Email and Password")
+    }
+}
 
     
     return (
@@ -46,7 +74,7 @@ const [passwordVisible, setPasswordVisible] = useState("false")
             </View>
 
             <View>
-                <TouchableOpacity style={styles.btn}>
+                <TouchableOpacity style={styles.btn} onPress={handleLogin}>
                     <Text style={styles.btnText}>Login</Text>
                 </TouchableOpacity>
             </View>

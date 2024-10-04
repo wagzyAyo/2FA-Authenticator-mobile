@@ -1,0 +1,4 @@
+<application
+    android:usesCleartextTraffic="true"
+    ...
+>
