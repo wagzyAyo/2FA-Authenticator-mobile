@@ -13,7 +13,7 @@ const [passwordVisible, setPasswordVisible] = useState("false");
 const handleLogin = async ()=>{
     if (email && password){
         try {
-            const response = await fetch('http://192.168.90.218/api/auth/login', {
+            const response = await fetch('http://192.168.90.218:5000/api/auth/login', {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json"
@@ -24,6 +24,8 @@ const handleLogin = async ()=>{
                 }),
             })
             const data = await response.json();
+            console.log('Response', response.status, data);
+            console.log({email, password})
             if (response.status == 200){
                 navigation.navigate('Home')
             }else{
