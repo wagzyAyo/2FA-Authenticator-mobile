@@ -1,19 +1,19 @@
-import { View,Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { useState } from 'react';
+import { View,Text, StyleSheet, TouchableOpacity } from "react-native";
 import { COLORS, SIZES } from "../styles";
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import NoCode from "./noCode";
 
 
 export default function Home() {
+    const [codes, setCodes] = useState(false)
     return (
         <View >
             <Text style={styles.textTitle}>Alpha <Text style={styles.text2}>Authenticator</Text></Text>
-            <View  style={styles.imgContainer}>
-                <Image  source={require("../../assets/noCode.png")} style={styles.img} />
-            </View>
-            <Text style={styles.text}>No codes here yet. Add new code</Text>
-            <TouchableOpacity style={styles.btn}>
-                <Text style={styles.btnText}>Add code</Text>
-            </TouchableOpacity>
+            {!codes ? 
+            (<NoCode />) :
+            (<Text>Codes</Text>)
+        }
             <TouchableOpacity style={styles.roundBtn}>
                 <MaterialIcons
                     name="add"
@@ -37,38 +37,6 @@ styles = StyleSheet.create({
     },
     text2: {
         color: COLORS.surface
-    },
-    imgContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: 300,
-    },
-    img:{
-        width: 200,
-        height: 200,
-    },
-      text: {
-        textAlign: "center",
-        fontSize: SIZES.bodySmall,
-        marginTop: 100,
-      },
-      btn: {
-        margin: SIZES.width / 24,
-        width: SIZES.width - 32,
-        paddingRight: 10,
-        paddingLeft: 10,
-        paddingTop: 16,
-        paddingBottom: 16,
-        backgroundColor: COLORS.primary,
-        borderRadius: 8,
-        marginTop: 40,
-    },
-    btnText: {
-        fontSize: SIZES.button,
-        letterSpacing: 1.25,
-        color: COLORS.background,
-        textAlign: 'center'
     },
     roundBtn: {
         position: 'fixed',
