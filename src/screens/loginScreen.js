@@ -87,9 +87,8 @@ const handleLogin = async ()=>{
 
             <View>
                 <TouchableOpacity style={styles.btnStroke}>
-                    <Text style={styles.btnTextStroke}>Continue with google
-                        <Image source={require('../../assets/googleIcon.png')} style={styles.icon}/>
-                    </Text>
+                    <Image source={require('../../assets/googleIcon.png')} style={styles.icon}/>
+                    <Text style={styles.btnTextStroke}>Continue with google</Text>
                 </TouchableOpacity>
             </View>
 
@@ -177,6 +176,10 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
     btnStroke: {
+        flexDirection: "row",
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 10,
         width: SIZES.width - 32,
         borderWidth: 1,
         borderColor: COLORS.primary,
