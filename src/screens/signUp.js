@@ -1,7 +1,8 @@
 import { useState } from "react"
 import { Text, View, StyleSheet, TextInput, Image, TouchableOpacity, Alert } from "react-native"
 import { COLORS, SIZES } from "../styles";
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function SignUpScreen ({navigation}) {
 
@@ -29,7 +30,9 @@ const handleSignup = async ()=>{
             
                 const data = await response.json();
                 if(response.status == 200){
-                    Alert.alert('success', data.message)
+                    //console.log(data)
+                    await AsyncStorage.setItem(JSON.stringify(data.message))
+                    Alert.alert('Account created!')
                     navigation.navigate('Home')
                 }else{
                     Alert.alert('Sign up failed:', data.message)

@@ -28,7 +28,7 @@ const handleLogin = async ()=>{
             console.log('Response', response.status, data);
             console.log({email, password})
             if (response.status == 200){
-                console.log(data)
+                //console.log(data)
                 await AsyncStorage.setItem('token', JSON.stringify(data.message))
                 Alert.alert('login successful')
                 navigation.navigate('Home')
