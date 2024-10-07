@@ -16,7 +16,7 @@ const handleSignup = async ()=>{
     if (email && password && confirmPassword){
         try {
             if (password == confirmPassword){
-                const response = await fetch('http://192.168.90.218:5000/api/auth/signup', {
+                const response = await fetch('https://twofa-authenticator.onrender.com/api/auth/signup', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

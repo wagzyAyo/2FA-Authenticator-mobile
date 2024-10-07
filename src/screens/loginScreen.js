@@ -13,7 +13,7 @@ const [passwordVisible, setPasswordVisible] = useState("false");
 const handleLogin = async ()=>{
     if (email && password){
         try {
-            const response = await fetch('http://192.168.90.218:5000/api/auth/login', {
+            const response = await fetch('https://twofa-authenticator.onrender.com/api/auth/login', {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json"
