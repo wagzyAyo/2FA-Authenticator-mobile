@@ -1,7 +1,8 @@
 import { useState } from "react"
 import { Text, View, StyleSheet, TextInput, Image, TouchableOpacity, Alert } from "react-native"
 import { COLORS, SIZES } from "../styles";
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function LoginScreen ({navigation}) {
 
@@ -27,6 +28,9 @@ const handleLogin = async ()=>{
             console.log('Response', response.status, data);
             console.log({email, password})
             if (response.status == 200){
+                console.log(data)
+                await AsyncStorage.setItem('token', JSON.stringify(data.message))
+                Alert.alert('login successful')
                 navigation.navigate('Home')
             }else{
                 Alert.alert(`Login fail: ${data.message}`)

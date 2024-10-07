@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import { SIZES, COLORS } from './src/styles';
@@ -10,6 +10,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from './src/screens/Home';
 import SignUpScreen from './src/screens/signUp';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createNativeStackNavigator();
 
@@ -18,6 +19,18 @@ export default function App() {
 
   const [showhome, setShowHome] = useState(false);
   const [authenticated, setAuthenticated] = useState(false);
+
+  useEffect(() =>{
+    const checkAuthentication = async ()=>{
+      try {
+        const token = await AsyncStorage.getItem('token');
+        setAuthenticated(!!token)
+      } catch (err) {
+        console.log('Error retrieving token')
+      }
+    }
+    checkAuthentication()
+  }, [])
 
   const btnLabel = (label) =>{
     return (
@@ -75,15 +88,14 @@ export default function App() {
           }
         }
         >
-          {authenticated ?
-          (<Stack.Screen name='Home' component={Home}/>)
-          :
-          (
+          {
             <>
-              <Stack.Screen name='Login' component={LoginScreen}/>
-              <Stack.Screen name='SignUp' component={SignUpScreen}/>
+            <Stack.Screen name='Home' component={Home}/>
+            <Stack.Screen name='Login' component={LoginScreen}/>
+            <Stack.Screen name='SignUp' component={SignUpScreen}/>
             </>
-          )
+          
+            
         }
         </Stack.Navigator>
         <StatusBar style="auto" />
