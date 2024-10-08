@@ -5,7 +5,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import NoCode from "./noCode";
 
 
-export default function Home() {
+export default function Home({navigation}) {
     const [codes, setCodes] = useState(false)
     return (
         <View >
@@ -23,7 +23,7 @@ export default function Home() {
             (<NoCode />) :
             (<Text>Codes</Text>)
         }
-            <TouchableOpacity style={styles.roundBtn}>
+            <TouchableOpacity style={styles.roundBtn} onPress={()=>(navigation.navigate('SetUp'))}>
                 <MaterialIcons
                     name="add"
                     size={30}
