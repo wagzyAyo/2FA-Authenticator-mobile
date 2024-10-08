@@ -20,7 +20,7 @@ export default function Home({navigation}) {
             </View>
             
             {!codes ? 
-            (<NoCode />) :
+            (<NoCode navigation={navigation}/>) :
             (<Text>Codes</Text>)
         }
             <TouchableOpacity style={styles.roundBtn} onPress={()=>(navigation.navigate('SetUp'))}>

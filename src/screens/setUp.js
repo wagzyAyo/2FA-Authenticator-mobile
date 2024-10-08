@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet } from "react-native";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { SIZES } from "../styles";
+import { COLORS, SIZES } from "../styles";
 
 export default function SetUp({navigation}){
     return(
@@ -19,6 +19,25 @@ export default function SetUp({navigation}){
             <Text style ={styles.subTitle}>
                 Use the Qr code or setup key in your 2FA settings.
             </Text>
+            <View style={styles.choice}>
+            <View style={styles.select}>
+                <MaterialIcons 
+                    name={'camera-alt'}
+                    size={24}
+                    color={COLORS.surface}
+                />
+                <Text style={styles.text}>Scan Qr code</Text>
+            </View>
+            <View style={styles.select}>
+                <MaterialIcons 
+                    name={'keyboard'}
+                    size={24}
+                    color={COLORS.surface}
+                />
+                <Text style={styles.text}>Enter Setup key</Text>
+            </View>
+            </View>
+            
         </View>
     )
 }
@@ -40,5 +59,18 @@ const styles = StyleSheet.create({
         fontSize: SIZES.bodyLarge,
         letterSpacing: 0.5,
         textAlign: "center"
+    },
+    choice: {
+        marginTop: 48,
+    },
+    select: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 10,
+        marginTop: 24
+    },
+    text:{
+        fontSize: SIZES.bodyLarge,
+        letterSpacing: 0.5
     }
 })

@@ -1,14 +1,14 @@
 import { Text, View, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { SIZES, COLORS } from "../styles";
 
-export default function NoCode(){
+export default function NoCode({navigation}){
     return (
         <View>
             <View  style={styles.imgContainer}>
                 <Image  source={require("../../assets/noCode.png")} style={styles.img} />
             </View>
             <Text style={styles.text}>No codes here yet. Add new code</Text>
-            <TouchableOpacity style={styles.btn}>
+            <TouchableOpacity style={styles.btn} onPress={()=>(navigation.navigate('SetUp'))}>
                 <Text style={styles.btnText}>Add code</Text>
             </TouchableOpacity>
         </View>
