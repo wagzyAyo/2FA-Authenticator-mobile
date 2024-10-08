@@ -28,13 +28,13 @@ export default function SetUp({navigation}){
                 />
                 <Text style={styles.text}>Scan Qr code</Text>
             </View>
-            <View style={styles.select}>
+            <View style={styles.select} >
                 <MaterialIcons 
                     name={'keyboard'}
                     size={24}
                     color={COLORS.surface}
                 />
-                <Text style={styles.text}>Enter Setup key</Text>
+                <Text style={styles.text} onPress={()=>(navigation.navigate('AddAccount'))}>Enter Setup key</Text>
             </View>
             </View>
             
