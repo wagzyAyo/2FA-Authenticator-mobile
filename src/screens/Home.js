@@ -3,6 +3,7 @@ import { View,Text, StyleSheet, TouchableOpacity } from "react-native";
 import { COLORS, SIZES } from "../styles";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import NoCode from "./noCode";
+import MyDrawer from '../components/drawer';
 
 
 export default function Home({navigation}) {
@@ -10,12 +11,13 @@ export default function Home({navigation}) {
     return (
         <View >
             <View style={styles.topNav}>
-            <MaterialIcons
+            {/* <MaterialIcons
               name={"menu-open"}
               size={30}
               color={COLORS.surface}
               style={styles.menu}
-            />
+            /> */}
+            <MyDrawer/>
             <Text style={styles.textTitle}>Alpha <Text style={styles.text2}>Authenticator</Text></Text>
             </View>
             

@@ -1,3 +1,4 @@
+import './gesture-handler';
 import { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image } from 'react-native';
@@ -12,7 +13,9 @@ import Home from './src/screens/Home';
 import SignUpScreen from './src/screens/signUp';
 import SetUp from './src/screens/setUp';
 import AddAccount from './src/screens/addAccount';
+import About from './src/screens/About';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const Stack = createNativeStackNavigator();
 
@@ -97,6 +100,7 @@ export default function App() {
             <Stack.Screen name='SignUp' component={SignUpScreen}/>
             <Stack.Screen name='SetUp' component={SetUp}/>
             <Stack.Screen name='AddAccount' component={AddAccount}/>
+            <Stack.Screen name='About' component={About}/>
             </>
           
             
