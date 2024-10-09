@@ -1,19 +1,51 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import React, { useState, useRef } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Animated, Easing, TouchableWithoutFeedback } from "react-native";
 import { COLORS, SIZES } from "../styles";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import NoCode from "./noCode";
-import DrawerMenu from '../components/DrawerMenu';
 
 export default function Home({ navigation }) {
+    const [drawerOpen, setDrawerOpen] = useState(false);
+    const slideAnim = useRef(new Animated.Value(-300)).current; // Initial position of the drawer offscreen
+
+    const toggleDrawer = () => {
+        if (drawerOpen) {
+            Animated.timing(slideAnim, {
+                toValue: -300, // Slide back offscreen
+                duration: 300,
+                easing: Easing.ease,
+                useNativeDriver: true,
+            }).start(() => setDrawerOpen(false));
+        } else {
+            setDrawerOpen(true);
+            Animated.timing(slideAnim, {
+                toValue: 0, // Slide onscreen
+                duration: 300,
+                easing: Easing.ease,
+                useNativeDriver: true,
+            }).start();
+        }
+    };
+
+    const handleOutsidePress = () => {
+        if (drawerOpen) {
+            toggleDrawer(); // Close the drawer if it's open and clicked outside
+        }
+    };
+
     return (
         <View style={styles.container}>
-            {/* Top navigation with the DrawerMenu */}
+            {/* Top navigation */}
             <View style={styles.topNav}>
-                <Text>
-                <DrawerMenu navigation={navigation} />
-                </Text>
-                {/* Use the DrawerMenu component */}
+                <TouchableOpacity onPress={toggleDrawer}>
+                    <MaterialIcons
+                        name={"menu-open"}
+                        size={30}
+                        color={COLORS.surface}
+                        style={styles.menu}
+                    />
+                </TouchableOpacity>
+
                 <Text style={styles.textTitle}>Alpha <Text style={styles.text2}>Authenticator</Text></Text>
             </View>
 
@@ -29,6 +61,19 @@ export default function Home({ navigation }) {
                     style={styles.add}
                 />
             </TouchableOpacity>
+
+            {/* Drawer menu - overlay */}
+            {drawerOpen && (
+                <TouchableWithoutFeedback onPress={handleOutsidePress}>
+                    <View style={styles.drawerOverlay}>
+                        <Animated.View style={[styles.drawer, { transform: [{ translateX: slideAnim }] }]}>
+                            <Text style={styles.drawerText} onPress={()=> navigation.navigate('Home')}>Check codes</Text>
+                            <Text style={styles.drawerText}>Dark mode</Text>
+                            <Text style={styles.drawerText} onPress={()=> navigation.navigate('About')}>About</Text>
+                        </Animated.View>
+                    </View>
+                </TouchableWithoutFeedback>
+            )}
         </View>
     );
 }
@@ -44,6 +89,9 @@ const styles = StyleSheet.create({
         position: "relative",
         top: 50,
     },
+    menu: {
+        paddingLeft: 16,
+    },
     textTitle: {
         left: SIZES.width / 4,
         fontSize: SIZES.h2,
@@ -52,6 +100,31 @@ const styles = StyleSheet.create({
     },
     text2: {
         color: COLORS.surface,
+    },
+    drawer: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: 300,
+        height: SIZES.height,
+        backgroundColor: COLORS.surface,
+        paddingTop: 50,
+        paddingLeft: 20,
+        zIndex: 10, // Make sure it overlaps the content
+    },
+    drawerOverlay: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: SIZES.width,
+        height: SIZES.height,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)', // Add a semi-transparent background for effect
+        zIndex: 9, // Layer between drawer and content
+    },
+    drawerText: {
+        color: COLORS.background,
+        fontSize: 18,
+        marginBottom: 20,
     },
     roundBtn: {
         position: 'absolute',
