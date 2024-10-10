@@ -15,6 +15,7 @@ import SetUp from './src/screens/setUp';
 import AddAccount from './src/screens/addAccount';
 import About from './src/screens/About';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Settings from './src/screens/Settings';
 
 
 const Stack = createNativeStackNavigator();
@@ -101,6 +102,7 @@ export default function App() {
             <Stack.Screen name='SetUp' component={SetUp}/>
             <Stack.Screen name='AddAccount' component={AddAccount}/>
             <Stack.Screen name='About' component={About}/>
+            <Stack.Screen name='Settings' component={Settings}/>
             </>
           
             

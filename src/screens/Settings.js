@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Animated, Easing, TouchableWi
 import { COLORS, SIZES } from "../styles";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-export default function About({ navigation }) {
+export default function Settings({ navigation }) {
     const [drawerOpen, setDrawerOpen] = useState(false);
     const slideAnim = useRef(new Animated.Value(-300)).current; // Initial position of the drawer offscreen
 
@@ -46,12 +46,12 @@ export default function About({ navigation }) {
                 <Text style={styles.textTitle}>Alpha <Text style={styles.text2}>Authenticator</Text></Text>
             </View>
 
-            {/* About content */}
+            {/* Settings content */}
             <View style={styles.content}>
-                <Text style={styles.heading}>About Alpha Authenticator</Text>
+                <Text style={styles.heading}>Settings</Text>
                 <Text style={styles.paragraph}>
-                    Alpha Authenticator is designed to provide users with secure and easy-to-use two-factor authentication. 
-                    With time-based one-time passwords and QR code encryption, your accounts are more secure than ever.
+                    Configure your preferences for Alpha Authenticator here. 
+                    You can enable features like dark mode, manage your accounts, and more.
                 </Text>
             </View>
 
@@ -63,7 +63,7 @@ export default function About({ navigation }) {
                             <Text style={styles.drawerText} onPress={() => navigation.navigate('Home')}>View codes</Text>
                             <Text style={styles.drawerText}>Dark Mode</Text>
                             <Text style={styles.drawerText}>How It Works</Text>
-                            <Text style={styles.drawerText} onPress={()=> navigation.navigate('About')}>About</Text>
+                            <Text style={styles.drawerText} onPress={() => navigation.navigate('About')}>About</Text>
                             <Text style={styles.drawerText} onPress={() => navigation.navigate('Settings')}>Settings</Text>
                         </Animated.View>
                     </View>
