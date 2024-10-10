@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Animated, Easing, TouchableWithoutFeedback } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Animated, Easing, TouchableWithoutFeedback, Image } from "react-native";
 import { COLORS, SIZES } from "../styles";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import NoCode from "./noCode";
@@ -38,11 +38,9 @@ export default function Home({ navigation }) {
             {/* Top navigation */}
             <View style={styles.topNav}>
                 <TouchableOpacity onPress={toggleDrawer}>
-                    <MaterialIcons
-                        name={"menu-open"}
-                        size={30}
-                        color={COLORS.surface}
-                        style={styles.menu}
+                    <Image 
+                      source={require('../../assets/menu.png')}
+                      style={styles.menu}
                     />
                 </TouchableOpacity>
 
@@ -67,9 +65,11 @@ export default function Home({ navigation }) {
                 <TouchableWithoutFeedback onPress={handleOutsidePress}>
                     <View style={styles.drawerOverlay}>
                         <Animated.View style={[styles.drawer, { transform: [{ translateX: slideAnim }] }]}>
-                            <Text style={styles.drawerText} onPress={()=> navigation.navigate('Home')}>Check codes</Text>
+                            <Text style={styles.drawerText} onPress={()=> navigation.navigate('Home')}>View codes</Text>
                             <Text style={styles.drawerText}>Dark mode</Text>
+                            <Text style={styles.drawerText}>How it works</Text>
                             <Text style={styles.drawerText} onPress={()=> navigation.navigate('About')}>About</Text>
+                            <Text style={styles.drawerText} onPress={()=> navigation.navigate('About')}>Settings</Text>
                         </Animated.View>
                     </View>
                 </TouchableWithoutFeedback>
@@ -88,9 +88,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         position: "relative",
         top: 50,
+        paddingLeft: 16
     },
     menu: {
-        paddingLeft: 16,
+        width: 30,
+        height: 17,
     },
     textTitle: {
         left: SIZES.width / 4,
