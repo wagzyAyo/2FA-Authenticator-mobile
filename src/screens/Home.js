@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     },
     roundBtn: {
         position: 'absolute',
-        bottom: -SIZES.height * 20 / 100,
+        bottom: 150,
         left: SIZES.width - 72,
         width: 58,
         height: 58,
