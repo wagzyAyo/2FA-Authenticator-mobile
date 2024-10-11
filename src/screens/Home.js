@@ -78,7 +78,7 @@ export default function Home({ navigation }) {
                             <Text style={styles.drawerText} onPress={()=> toggleTheme()}>Dark mode</Text>
                             <Text style={styles.drawerText}>How it works</Text>
                             <Text style={styles.drawerText} onPress={()=> navigation.navigate('About')}>About</Text>
-                            <Text style={styles.drawerText} onPress={()=> navigation.navigate('About')}>Settings</Text>
+                            <Text style={styles.drawerText} onPress={()=> navigation.navigate('Settings')}>Settings</Text>
                         </Animated.View>
                     </View>
                 </TouchableWithoutFeedback>

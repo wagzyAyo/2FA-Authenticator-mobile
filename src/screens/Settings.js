@@ -1,12 +1,17 @@
 import React, { useState, useRef, useContext } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Animated, Easing, TouchableWithoutFeedback, Image } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Animated, Easing, TouchableWithoutFeedback, Image, Switch } from "react-native";
 import { COLORS, SIZES } from "../styles";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { ThemeContext } from '../components/Theme';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Settings({ navigation }) {
+    const {themeMode, toggleTheme} = useContext(ThemeContext);
     const [drawerOpen, setDrawerOpen] = useState(false);
     const slideAnim = useRef(new Animated.Value(-300)).current; // Initial position of the drawer offscreen
+
+
+    const styles = getStyles(themeMode);
 
     const toggleDrawer = () => {
         if (drawerOpen) {
@@ -33,15 +38,26 @@ export default function Settings({ navigation }) {
         }
     };
 
+    const handleLogout = async ()=>{
+        await AsyncStorage.removeItem('token');
+        Alert.alert('Loging out.');
+        navigation.navigate('Login')
+    }
+
     return (
         <View style={styles.container}>
             {/* Top navigation */}
             <View style={styles.topNav}>
-                <TouchableOpacity onPress={toggleDrawer}>
-                    <Image 
+            <TouchableOpacity onPress={toggleDrawer}>
+                    {
+                    themeMode ? 
+                    (<Image source={require('../../assets/menuWhite.png')}
+                      style={styles.menu} />) :
+                      (<Image 
                       source={require('../../assets/menu.png')}
                       style={styles.menu}
-                    />
+                    />)
+                    }
                 </TouchableOpacity>
 
                 <Text style={styles.textTitle}>Alpha <Text style={styles.text2}>Authenticator</Text></Text>
@@ -54,6 +70,14 @@ export default function Settings({ navigation }) {
                     Configure your preferences for Alpha Authenticator here. 
                     You can enable features like dark mode, manage your accounts, and more.
                 </Text>
+                <View>
+                    <TouchableOpacity>
+                        <Text>Dark Mode</Text><Switch value='true'></Switch>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=> handleLogout}>
+                        <Text>Logout</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
 
             {/* Drawer menu */}
@@ -62,7 +86,7 @@ export default function Settings({ navigation }) {
                     <View style={styles.drawerOverlay}>
                         <Animated.View style={[styles.drawer, { transform: [{ translateX: slideAnim }] }]}>
                             <Text style={styles.drawerText} onPress={() => navigation.navigate('Home')}>View codes</Text>
-                            <Text style={styles.drawerText}>Dark Mode</Text>
+                            <Text style={styles.drawerText} onPress={()=>toggleTheme()}>Dark Mode</Text>
                             <Text style={styles.drawerText}>How It Works</Text>
                             <Text style={styles.drawerText} onPress={() => navigation.navigate('About')}>About</Text>
                             <Text style={styles.drawerText} onPress={() => navigation.navigate('Settings')}>Settings</Text>
@@ -74,10 +98,10 @@ export default function Settings({ navigation }) {
     );
 }
 
-const styles = StyleSheet.create({
+const getStyles = (themeMode) =>StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: themeMode ? COLORS.surface : COLORS.background,
     },
     topNav: {
         flexDirection: 'row',
@@ -97,7 +121,7 @@ const styles = StyleSheet.create({
         color: COLORS.secondary,
     },
     text2: {
-        color: COLORS.surface,
+        color: themeMode ? COLORS.background : COLORS.surface,
     },
     content: {
         marginTop: 100,
@@ -111,7 +135,7 @@ const styles = StyleSheet.create({
     },
     paragraph: {
         fontSize: SIZES.body2,
-        color: COLORS.text,
+        color: themeMode ? COLORS.background : COLORS.surface,
     },
     drawer: {
         position: 'absolute',
@@ -119,7 +143,7 @@ const styles = StyleSheet.create({
         left: 0,
         width: 300,
         height: SIZES.height,
-        backgroundColor: COLORS.surface,
+        backgroundColor: themeMode ? COLORS.background : COLORS.surface,
         paddingTop: 50,
         paddingLeft: 20,
         zIndex: 10,
@@ -134,7 +158,7 @@ const styles = StyleSheet.create({
         zIndex: 9,
     },
     drawerText: {
-        color: COLORS.background,
+        color: themeMode ? COLORS.surface : COLORS.background,
         fontSize: 18,
         marginBottom: 20,
     },
