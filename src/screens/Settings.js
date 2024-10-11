@@ -72,10 +72,13 @@ export default function Settings({ navigation }) {
                 </Text>
                 <View>
                     <TouchableOpacity>
-                        <Text>Dark Mode</Text><Switch value='true'></Switch>
+                        <Text style={styles.text2}>Dark Mode</Text><Switch value='true'></Switch>
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                        <Text style={styles.text2}>Biometrics login</Text><Switch></Switch>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=> handleLogout}>
-                        <Text>Logout</Text>
+                        <Text style={styles.text2}>Logout</Text>
                     </TouchableOpacity>
                 </View>
             </View>
