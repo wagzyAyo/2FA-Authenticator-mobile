@@ -1,8 +1,9 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Animated, Easing, TouchableWithoutFeedback, Image } from "react-native";
 import { COLORS, SIZES } from "../styles";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import NoCode from "./noCode";
+import { ThemeContext } from '../components/Theme';
 
 export default function Home({ navigation }) {
     const [drawerOpen, setDrawerOpen] = useState(false);
