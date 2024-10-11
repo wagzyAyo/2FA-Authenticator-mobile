@@ -1,7 +1,12 @@
+import {useContext} from 'react';
 import { Text, View, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { SIZES, COLORS } from "../styles";
+import { ThemeContext } from '../components/Theme';
 
 export default function NoCode({navigation}){
+    const {themeMode} = useContext(ThemeContext);
+
+    const styles = getStyles(themeMode)
     return (
         <View>
             <View  style={styles.imgContainer}>
@@ -15,7 +20,7 @@ export default function NoCode({navigation}){
     )
 }
 
-const styles = StyleSheet.create({
+const getStyles =(themeMode) => StyleSheet.create({
     imgContainer: {
         flex: 1,
         justifyContent: 'center',
@@ -30,6 +35,7 @@ const styles = StyleSheet.create({
         textAlign: "center",
         fontSize: SIZES.bodySmall,
         marginTop: 100,
+        color: themeMode ? COLORS.background : COLORS.surface,
       },
       btn: {
         margin: SIZES.width / 24,
