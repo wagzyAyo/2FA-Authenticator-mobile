@@ -1,16 +1,13 @@
-import {useContext} from react
 import { Dimensions } from "react-native";
-import { ThemeContext } from "./components/Theme";
 
 const {width , height } = Dimensions.get('screen');
-const {themeMode, toggleTheme} = useContext(ThemeContext);
 
 
 export const COLORS = {
     primary: "#0AADAD",
     secondary: "#3096BD",
-    background: themeMode ?"#000000" : "FFFFFF",
-    surface: themeMode ? "FFFFFF": "#000000",
+    background: "#FFFFFF",
+    surface: "#000000"
 }
 
 export const SIZES = {

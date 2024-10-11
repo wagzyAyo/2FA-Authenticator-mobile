@@ -86,6 +86,7 @@ export default function App() {
     )
   }
   return (
+    <ThemeProvider>
       <NavigationContainer>
         <Stack.Navigator 
         initialRouteName={authenticated ? 'Home' : 'Login'}
@@ -97,7 +98,7 @@ export default function App() {
         >
           {
             <>
-            <ThemeProvider>
+           
               <Stack.Screen name='Home' component={Home}/>
               <Stack.Screen name='Login' component={LoginScreen}/>
               <Stack.Screen name='SignUp' component={SignUpScreen}/>
@@ -105,7 +106,7 @@ export default function App() {
               <Stack.Screen name='AddAccount' component={AddAccount}/>
               <Stack.Screen name='About' component={About}/>
               <Stack.Screen name='Settings' component={Settings}/>
-            </ThemeProvider>
+            
             </>
           
             
@@ -113,7 +114,7 @@ export default function App() {
         </Stack.Navigator>
         <StatusBar style="auto" />
       </NavigationContainer>
-      
+      </ThemeProvider>
   );
 }
 
