@@ -70,15 +70,18 @@ export default function Settings({ navigation }) {
                     Configure your preferences for Alpha Authenticator here. 
                     You can enable features like dark mode, manage your accounts, and more.
                 </Text>
-                <View>
-                    <TouchableOpacity>
+                <View style={styles.manage}>
+                    <TouchableOpacity style={styles.btnContainer}>
                         <Text style={styles.text2}>Dark Mode</Text><Switch value='true'></Switch>
                     </TouchableOpacity>
-                    <TouchableOpacity>
+                    <TouchableOpacity style={styles.btnContainer}>
                         <Text style={styles.text2}>Biometrics login</Text><Switch></Switch>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={()=> handleLogout}>
+                    <TouchableOpacity onPress={()=> handleLogout} style={styles.btnContainer}>
+                        <View style={styles.logBtn}>
+                        <MaterialIcons name='logout' size={24}/>
                         <Text style={styles.text2}>Logout</Text>
+                        </View> 
                     </TouchableOpacity>
                 </View>
             </View>
@@ -165,4 +168,30 @@ const getStyles = (themeMode) =>StyleSheet.create({
         fontSize: 18,
         marginBottom: 20,
     },
+    manage: {
+        marginTop: 40,
+    },
+    btnContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        width: SIZES.width - SIZES.width * 10/100,
+        height: 44,
+        backgroundColor: COLORS.background,
+        marginTop: 24,
+        shadowColor: '#000000',
+        shadowOffset: {
+            width: 0,
+            height: 8,
+        },
+        shadowRadius: 10,
+        shadowOpacity: 0.20,
+        elevation: 5,
+        fontSize: SIZES.bodySmall,
+        padding: 10,
+    },
+    logBtn: {
+        flexDirection: 'row',
+        alignContent: 'center',
+    }
 });
