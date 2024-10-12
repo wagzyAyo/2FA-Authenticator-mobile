@@ -72,15 +72,15 @@ export default function Settings({ navigation }) {
                 </Text>
                 <View style={styles.manage}>
                     <TouchableOpacity style={styles.btnContainer}>
-                        <Text style={styles.text2}>Dark Mode</Text><Switch value='true'></Switch>
+                        <Text>Dark Mode</Text><Switch value='true'></Switch>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.btnContainer}>
-                        <Text style={styles.text2}>Biometrics login</Text><Switch></Switch>
+                        <Text>Biometrics login</Text><Switch></Switch>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=> handleLogout} style={styles.btnContainer}>
                         <View style={styles.logBtn}>
                         <MaterialIcons name='logout' size={24}/>
-                        <Text style={styles.text2}>Logout</Text>
+                        <Text >Logout</Text>
                         </View> 
                     </TouchableOpacity>
                 </View>
