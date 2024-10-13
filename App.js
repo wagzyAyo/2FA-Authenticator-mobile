@@ -1,6 +1,6 @@
 import './gesture-handler';
-import { useState, useEffect } from 'react';
-import { StatusBar } from 'expo-status-bar';
+import { useState, useEffect} from 'react';
+import CustomStatusBar from './src/components/customStatusBar';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import { SIZES, COLORS } from './src/styles';
 import { slides } from './src/slides';
@@ -16,48 +16,42 @@ import AddAccount from './src/screens/addAccount';
 import About from './src/screens/About';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Settings from './src/screens/Settings';
-import { ThemeProvider } from './src/components/Theme';
-
+import { ThemeProvider, ThemeContext } from './src/components/Theme'; // Don't need to import useContext here
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-  
-
   const [showhome, setShowHome] = useState(false);
   const [authenticated, setAuthenticated] = useState(false);
 
-  useEffect(() =>{
-    const checkAuthentication = async ()=>{
+  useEffect(() => {
+    const checkAuthentication = async () => {
       try {
         const token = await AsyncStorage.getItem('token');
-        setAuthenticated(!!token)
+        setAuthenticated(!!token);
       } catch (err) {
-        console.log('Error retrieving token')
+        console.log('Error retrieving token');
       }
-    }
-    checkAuthentication()
-  }, [])
+    };
+    checkAuthentication();
+  }, []);
 
-  const btnLabel = (label) =>{
+  const btnLabel = (label) => {
     return (
       <View style={styles.label}>
-      <Text style={styles.labelText}>
-        {label}
-      </Text>
-    </View>
-    )
-    
-  }
+        <Text style={styles.labelText}>{label}</Text>
+      </View>
+    );
+  };
 
-  if(!showhome){
+  if (!showhome) {
     return (
       <AppIntroSlider
         data={slides}
-        renderItem={({item}) =>{
-          return(
+        renderItem={({ item }) => {
+          return (
             <View style={styles.onboard}>
-              <Image  
+              <Image
                 source={item.image}
                 style={{
                   width: SIZES.width - 10,
@@ -65,72 +59,62 @@ export default function App() {
                 }}
                 resizeMode="contain"
               />
-              <Text style={styles.title}>
-                {item.title}
-              </Text>
-              <Text style={styles.description}>
-                {item.description}
-              </Text>
+              <Text style={styles.title}>{item.title}</Text>
+              <Text style={styles.description}>{item.description}</Text>
             </View>
-          )
+          );
         }}
         activeDotStyle={{
-          backgroundColor: COLORS.primary
+          backgroundColor: COLORS.primary,
         }}
         onDone={() => setShowHome(!showhome)}
         showSkipButton
-        renderSkipButton={() => btnLabel("Skip")}
+        renderSkipButton={() => btnLabel('Skip')}
         renderNextButton={() => <NextBtn />}
-        renderDoneButton= {() => btnLabel("Done")}
+        renderDoneButton={() => btnLabel('Done')}
       />
-    )
+    );
   }
+  
+  // Wrap entire app with ThemeProvider to ensure all components can access ThemeContext
   return (
     <ThemeProvider>
-      <NavigationContainer>
-        <Stack.Navigator 
-        initialRouteName={authenticated ? 'Home' : 'Login'}
-        screenOptions={
-          {
-            headerShown: false
-          }
-        }
-        >
-          {
-            <>
-           
-              <Stack.Screen name='Home' component={Home}/>
-              <Stack.Screen name='Login' component={LoginScreen}/>
-              <Stack.Screen name='SignUp' component={SignUpScreen}/>
-              <Stack.Screen name='SetUp' component={SetUp}/>
-              <Stack.Screen name='AddAccount' component={AddAccount}/>
-              <Stack.Screen name='About' component={About}/>
-              <Stack.Screen name='Settings' component={Settings}/>
-            
-            </>
-          
-            
-        }
-        </Stack.Navigator>
-        <StatusBar style="auto" />
-      </NavigationContainer>
-      </ThemeProvider>
+      <AppContent authenticated={authenticated} />
+    </ThemeProvider>
   );
 }
 
+function AppContent({ authenticated }) {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator
+        initialRouteName={authenticated ? 'Home' : 'Login'}
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
+        <>
+          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="SignUp" component={SignUpScreen} />
+          <Stack.Screen name="SetUp" component={SetUp} />
+          <Stack.Screen name="AddAccount" component={AddAccount} />
+          <Stack.Screen name="About" component={About} />
+          <Stack.Screen name="Settings" component={Settings} />
+        </>
+      </Stack.Navigator>
+      <CustomStatusBar />
+    </NavigationContainer>
+  );
+}
+
+
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: COLORS.background,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   onboard: {
     flex: 1,
     alignItems: 'center',
     padding: 16,
     paddingTop: 110,
-
   },
   title: {
     marginTop: 64,
@@ -138,16 +122,16 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   description: {
-    textAlign: "center",
+    textAlign: 'center',
     marginTop: 32,
     fontSize: SIZES.bodySmall,
   },
-  label:{
+  label: {
     padding: 12,
   },
   labelText: {
     fontSize: SIZES.bodyLarge,
     color: COLORS.surface,
-    letterSpacing: 0.5
-  }
+    letterSpacing: 0.5,
+  },
 });
