@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert } from "reac
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { SIZES, COLORS } from "../styles";
 import { ThemeContext } from '../components/Theme';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
@@ -15,6 +16,11 @@ export default function AddAccount({navigation}) {
     const styles = getStyles(themeMode)
 
     const handleSubmit = async()=>{
+        if(!accountKey || !accountName){
+            Alert.alert('Please provide account name and key');
+            return;
+        }
+
         try {
             const response = await fetch('https://twofa-authenticator.onrender.com/api/addapp', 
                 {
@@ -29,6 +35,12 @@ export default function AddAccount({navigation}) {
             const data = await response.json();
     
             if (response.status === 200){
+                
+                const existingAccount = await AsyncStorage.getItem('accounts');
+                const accounts = existingAccount ? JSON.parse(existingAccount) : [];
+                const newAccount = {appName: accountName, accountKey}
+                accounts.push(newAccount);
+                await AsyncStorage.setItem('accounts', JSON.stringify(accounts))
                 Alert.alert('Accounnt added');
                 navigation.navigate('Home');
             } else{
