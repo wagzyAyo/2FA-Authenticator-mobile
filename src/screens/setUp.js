@@ -1,8 +1,12 @@
+import { useContext} from 'react'
 import { View, Text, StyleSheet} from "react-native";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { COLORS, SIZES } from "../styles";
+import { ThemeContext } from '../components/Theme';
 
 export default function SetUp({navigation}){
+    const {themeMode} = useContext(ThemeContext);
+    const styles = getStyles(themeMode)
     return(
         <View style={styles.container}>
             <View >
@@ -10,6 +14,8 @@ export default function SetUp({navigation}){
                 name={'arrow-back'}
                 size={24}
                 onPress={()=>(navigation.navigate('Home'))}
+                color={themeMode ? COLORS.background : COLORS.surface}
+                style={styles.icon}
                 />
             </View>
             <Text style={styles.title}>
@@ -24,7 +30,7 @@ export default function SetUp({navigation}){
                 <MaterialIcons 
                     name={'camera-alt'}
                     size={24}
-                    color={COLORS.surface}
+                    color={themeMode ? COLORS.background : COLORS.surface}
                 />
                 <Text style={styles.text}>Scan Qr code</Text>
             </View>
@@ -32,7 +38,7 @@ export default function SetUp({navigation}){
                 <MaterialIcons 
                     name={'keyboard'}
                     size={24}
-                    color={COLORS.surface}
+                    color={themeMode ? COLORS.background : COLORS.surface}
                 />
                 <Text style={styles.text} onPress={()=>(navigation.navigate('AddAccount'))}>Enter Setup key</Text>
             </View>
@@ -42,23 +48,28 @@ export default function SetUp({navigation}){
     )
 }
 
-const styles = StyleSheet.create({
+const getStyles = (themeMode) => StyleSheet.create({
     container: {
         flex: 1,
-        marginTop: 50,
         padding: 16,
+        backgroundColor: themeMode ? COLORS.surface : COLORS.background,
+    },
+    icon: {
+        marginTop: 50,
     },
     title: {
         marginTop: SIZES.width / 4,
         fontSize: SIZES.h2,
         fontWeight: 'bold',
-        textAlign: 'center'
+        textAlign: 'center',
+        color: themeMode ? COLORS.background : COLORS.surface
     },
     subTitle: {
         marginTop: 40,
         fontSize: SIZES.bodyLarge,
         letterSpacing: 0.5,
-        textAlign: "center"
+        textAlign: "center",
+        color: themeMode ? COLORS.background : COLORS.surface
     },
     choice: {
         marginTop: 48,
@@ -71,6 +82,7 @@ const styles = StyleSheet.create({
     },
     text:{
         fontSize: SIZES.bodyLarge,
-        letterSpacing: 0.5
+        letterSpacing: 0.5,
+        color: themeMode ? COLORS.background : COLORS.surface
     }
 })
