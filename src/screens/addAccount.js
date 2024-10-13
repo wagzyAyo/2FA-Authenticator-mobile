@@ -1,5 +1,5 @@
 import {useState, useContext} from 'react'
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert } from "react-native";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { SIZES, COLORS } from "../styles";
 import { ThemeContext } from '../components/Theme';
@@ -13,6 +13,34 @@ export default function AddAccount({navigation}) {
     const [accountKey, setAccountKey] = useState("")
 
     const styles = getStyles(themeMode)
+
+    const handleSubmit = async()=>{
+        try {
+            const response = await fetch('https://twofa-authenticator.onrender.com/api/addapp', 
+                {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify( {
+                        appName: accountName
+                    })
+                }
+            );
+    
+            const data = await response.json();
+    
+            if (response.status === 200){
+                Alert.alert('Accounnt added');
+                navigation.navigate('Home');
+            } else{
+                Alert.alert('Error adding newApp')
+            }
+            
+        } catch (err) {
+            console.log(err);
+            Alert.alert("Error adding account", err.messge)
+        }
+        
+    }
 
     return (
         
@@ -30,19 +58,21 @@ export default function AddAccount({navigation}) {
             <View style={styles.input}>
             <TextInput
                 placeholder='Account name'
-                onChange={(text)=>(setAccountName(text))}
+                placeholderTextColor={themeMode ? COLORS.background : COLORS.surface}
+                onChangeText={(text)=>(setAccountName(text))}
                 value={accountName}
                 style={styles.textInput}
             />
             <TextInput
             
                 placeholder='Your key'
-                onChange={(text)=>(setAccountKey(text))}
+                placeholderTextColor={themeMode ? COLORS.background : COLORS.surface}
+                onChangeText={(text)=>(setAccountKey(text))}
                 value={accountKey}
                 style={styles.textInput}
             />
             </View>
-                <TouchableOpacity style={styles.btn}>
+                <TouchableOpacity style={styles.btn} onPress={handleSubmit}>
                     <Text style={styles.btnText}>Add</Text>
                 </TouchableOpacity>
             
