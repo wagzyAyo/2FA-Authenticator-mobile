@@ -1,12 +1,15 @@
-import React, { useState, useRef, useContext } from 'react';
+import React, { useState, useRef, useContext, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Animated, Easing, TouchableWithoutFeedback, Image } from "react-native";
 import { COLORS, SIZES } from "../styles";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import NoCode from "./noCode";
+import CodeBox from '../components/codeBox';
 import { ThemeContext } from '../components/Theme';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Home({ navigation }) {
     const {themeMode, toggleTheme} = useContext(ThemeContext);
+    const [data, setData] = useState([])
     const [drawerOpen, setDrawerOpen] = useState(false);
     const slideAnim = useRef(new Animated.Value(-300)).current; // Initial position of the drawer offscreen
 
@@ -36,6 +39,20 @@ export default function Home({ navigation }) {
         }
     };
 
+    useEffect(()=>{
+        const getAppsData= async ()=>{
+            try {
+                const appsData = await AsyncStorage.getItem('accounts');
+            if(appsData){
+                setData(JSON.parse(appsData));
+            }
+            } catch (err) {
+                console.log(err)
+            }
+        }
+        getAppsData();
+    }, [])
+
     return (
         <View style={styles.container}>
             {/* Top navigation */}
@@ -57,7 +74,13 @@ export default function Home({ navigation }) {
             </View>
 
             {/* Main content */}
-            <NoCode navigation={navigation} />
+            { data.length > 0 ? 
+                ( data.map((appData, index) => <CodeBox key={index} navigation={navigation} appName={appData.appName}/>)
+                )
+                 :
+                (<NoCode navigation={navigation} />)
+            }
+            
 
             {/* Floating button */}
             <TouchableOpacity style={styles.roundBtn} onPress={() => navigation.navigate('SetUp')}>
