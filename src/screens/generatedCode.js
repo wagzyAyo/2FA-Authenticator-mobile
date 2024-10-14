@@ -18,13 +18,20 @@ export default function GenerateCode({navigation, route}){
                 name={'arrow-back'}
                 size={24}
                 color={themeMode ? COLORS.background : COLORS.surface}
+                style={{marginTop: 50}}
                 onPress={()=>(navigation.navigate('Home'))}
             />
             <View style={styles.title}>
             <View style={styles.user}>
-                <MaterialIcons  name="person" size={30} color={COLORS.background}/>
+                <MaterialIcons  name="person" size={30} 
+                color={themeMode ? COLORS.surface : COLORS.background}/>
             </View>
                 <Text style={styles.textTitle}>{appName}</Text>
+            </View>
+            <View style={styles.subTitle}>
+                <MaterialIcons name="lock" size={24} color={themeMode ? COLORS.background : COLORS.surface}/>
+                <Text style={styles.subTitleText}>Use this one-time password code
+                generated to verify your sign-ins</Text>
             </View>
         </View>
     )
@@ -32,9 +39,9 @@ export default function GenerateCode({navigation, route}){
 
 const getStyles = (themeMode) => StyleSheet.create({
     container: {
+        backgroundColor: themeMode ? COLORS.surface : COLORS.background,
         flex: 1,
         padding: 16,
-        marginTop: 50,
     },
     title: {
         marginTop: 48,
@@ -45,11 +52,26 @@ const getStyles = (themeMode) => StyleSheet.create({
         height: 48,
         width: 48,
         borderRadius: 50,
-        backgroundColor: COLORS.surface,
+        backgroundColor: themeMode ? COLORS.background : COLORS.surface,
     },
     textTitle: {
+        left: SIZES.width /4,
         color: themeMode ? COLORS.background : COLORS.surface,
         fontSize: SIZES.h3,
         fontWeight: 'bold',
+    },
+    subTitle: {
+        marginTop: 24,
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 13,
+    },
+    subTitleText: {
+        color: themeMode ? COLORS.background : COLORS.surface,
+        width: SIZES.width / 2,
+        textAlign:'left',
+        fontSize: SIZES.bodyLarge,
+        letterSpacing: 0.5,
     }
+
 })

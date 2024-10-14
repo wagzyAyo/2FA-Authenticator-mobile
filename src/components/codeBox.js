@@ -5,12 +5,12 @@ import { COLORS, SIZES } from "../styles";
 export default function CodeBox({navigation, appName, accountKey}){
 
     const handlePress = ()=>{
-        navigation.navigation('generatedCode', {appName, accountKey})
+        navigation.navigate('GeneratedCode', {appName, accountKey})
     }
 
     return(
-        <View style={styles.container} onPress={handlePress}>
-        <TouchableOpacity style={styles.box}>
+        <View style={styles.container} >
+        <TouchableOpacity style={styles.box} onPress={handlePress}>
             <View style={styles.user}>
                 <MaterialIcons  name="person" size={30} color={COLORS.background}/>
             </View>
@@ -26,11 +26,10 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: "center",
         padding: 16,
-        marginTop: 50,
+        marginTop: 32,
         
     },
     box: {
-        marginTop: 32,
         width: SIZES.width - (SIZES.width * 5/100),
         height: 72,
         backgroundColor: COLORS.background,
