@@ -2,9 +2,14 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { COLORS, SIZES } from "../styles";
 
-export default function CodeBox({navigation, appName}){
+export default function CodeBox({navigation, appName, accountKey}){
+
+    const handlePress = ()=>{
+        navigation.navigation('generatedCode', {appName, accountKey})
+    }
+
     return(
-        <View style={styles.container}>
+        <View style={styles.container} onPress={handlePress}>
         <TouchableOpacity style={styles.box}>
             <View style={styles.user}>
                 <MaterialIcons  name="person" size={30} color={COLORS.background}/>

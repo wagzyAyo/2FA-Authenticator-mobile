@@ -75,7 +75,10 @@ export default function Home({ navigation }) {
 
             {/* Main content */}
             { data.length > 0 ? 
-                ( data.map((appData, index) => <CodeBox key={index} navigation={navigation} appName={appData.appName}/>)
+                ( data.map((appData, index) => 
+                <CodeBox 
+                key={index} navigation={navigation} 
+                appName={appData.appName} accountKey={appData.accountKey}/>)
                 )
                  :
                 (<NoCode navigation={navigation} />)
