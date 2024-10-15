@@ -33,6 +33,16 @@ export default function GenerateCode({navigation, route}){
                 <Text style={styles.subTitleText}>Use this one-time password code
                 generated to verify your sign-ins</Text>
             </View>
+
+            <View>
+                <View>
+                    {/* Timer here */}
+                </View>
+                <View>
+                    <Text>One-time password code</Text>
+                    <Text>{/* Code here */}</Text>
+                </View>
+            </View>
         </View>
     )
 }

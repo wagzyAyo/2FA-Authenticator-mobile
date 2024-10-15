@@ -72,17 +72,18 @@ export default function Home({ navigation }) {
 
                 <Text style={styles.textTitle}>Alpha <Text style={styles.text2}>Authenticator</Text></Text>
             </View>
-
-            {/* Main content */}
-            { data.length > 0 ? 
-                ( data.map((appData, index) => 
-                <CodeBox 
-                key={index} navigation={navigation} 
-                appName={appData.appName} accountKey={appData.accountKey}/>)
-                )
-                 :
-                (<NoCode navigation={navigation} />)
-            }
+            <View style={styles.main}>
+                {/* Main content */}
+                { data.length > 0 ? 
+                    ( data.map((appData, index) => 
+                    <CodeBox 
+                    key={index} navigation={navigation} 
+                    appName={appData.appName} accountKey={appData.accountKey}/>)
+                    )
+                    :
+                    (<NoCode navigation={navigation} />)
+                }
+            </View>
             
 
             {/* Floating button */}
@@ -182,4 +183,7 @@ const getStyles = (themeMode) => StyleSheet.create({
         shadowOpacity: 0.20,
         elevation: 5,
     },
+    main: {
+        marginTop: 50,
+    }
 });

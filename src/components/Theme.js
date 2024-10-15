@@ -23,8 +23,12 @@ export const ThemeProvider = ({children})=> {
     
 
     const toggleTheme = async ()=>{
-        setThemeMode((prevMode) => !prevMode)
-        await AsyncStorage.setItem('DarkMode', JSON.stringify(themeMode))
+        
+        setThemeMode((prevMode) => {
+            const newMode = !prevMode
+         AsyncStorage.setItem('DarkMode', JSON.stringify(newMode))
+         return newMode
+      })
     }
 
     return (
