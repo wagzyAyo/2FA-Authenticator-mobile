@@ -11,25 +11,33 @@ export default function GenerateCode({navigation, route}){
     const {appName, accountKey} = route.params
 
     const styles = getStyles(themeMode)
-   const {otp, expires} = TOTP.generate(String(accountKey));
-   const [timer, setTimer] = useState(0);
-   const [code, setCode] = useState("000 000")
+   const [timer, setTimer] = useState(30);
+   const [code, setCode] = useState(TOTP.generate(String(accountKey)).otp);
 
+
+   const generateCode = ()=>{
+    const {otp, expires} = TOTP.generate(String(accountKey));
+    setCode(otp);
+   };
 
 
    const updateTimeRemaining = ()=>{
-    const currenTime = Date.now();
-    const timeLeft = Math.floor((expires - currenTime) / 1000);
-    setTimer(timeLeft > 0 ? timeLeft : 0 )//Use timeLeft if greater than 0 else use 0
+    
+    setTimer(prevTime =>{
+        if(prevTime < 1){
+            generateCode();
+            return 30;
+        }
+        return prevTime -1
+    })
    }
 
    useEffect(()=>{
     updateTimeRemaining()
-    setInterval(setCode(otp), 30000)
     const Interval = setInterval(updateTimeRemaining, 1000) //update time remaining every seconds
 
     return ()=> clearInterval(Interval)
-   }, [expires])
+   }, [])
 
     return (
         <View style={styles.container}>
