@@ -1,8 +1,9 @@
-import { useContext } from "react";
+import { useContext, useEffect} from "react";
 import { Text, View, StyleSheet } from "react-native";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { ThemeContext } from "../components/Theme";
 import { COLORS, SIZES } from "../styles";
+import {TOTP} from 'totp-generator'
 
 
 export default function GenerateCode({navigation, route}){
@@ -10,6 +11,7 @@ export default function GenerateCode({navigation, route}){
     const {appName, accountKey} = route.params
 
     const styles = getStyles(themeMode)
+   const {otp, expires} = TOTP.generate(String(accountKey))
 
 
     return (
@@ -36,11 +38,11 @@ export default function GenerateCode({navigation, route}){
 
             <View style={styles.code}>
                 <View>
-                    {/* Timer here */}
+                    <Text>{expires}</Text>
                 </View>
                 <View>
                     <Text style={styles.subTitleText}>One-time password code</Text>
-                    <Text style={styles.codeText}>{/* Code here */}</Text>
+                    <Text style={styles.codeText}>{otp}</Text>
                 </View>
             </View>
         </View>
@@ -94,6 +96,7 @@ const getStyles = (themeMode) => StyleSheet.create({
         fontSize: SIZES.h3,
         fontWeight: 'bold',
         letterSpacing: 0.15,
+        marginTop: 16,
     }
 
 })
