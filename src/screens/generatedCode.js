@@ -1,4 +1,4 @@
-import { useContext, useEffect} from "react";
+import { useContext, useEffect, useState} from "react";
 import { Text, View, StyleSheet } from "react-native";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { ThemeContext } from "../components/Theme";
@@ -11,8 +11,25 @@ export default function GenerateCode({navigation, route}){
     const {appName, accountKey} = route.params
 
     const styles = getStyles(themeMode)
-   const {otp, expires} = TOTP.generate(String(accountKey))
+   const {otp, expires} = TOTP.generate(String(accountKey));
+   const [timer, setTimer] = useState(0);
+   const [code, setCode] = useState("000 000")
 
+
+
+   const updateTimeRemaining = ()=>{
+    const currenTime = Date.now();
+    const timeLeft = Math.floor((expires - currenTime) / 1000);
+    setTimer(timeLeft > 0 ? timeLeft : 0 )//Use timeLeft if greater than 0 else use 0
+   }
+
+   useEffect(()=>{
+    updateTimeRemaining()
+    setInterval(setCode(otp), 30000)
+    const Interval = setInterval(updateTimeRemaining, 1000) //update time remaining every seconds
+
+    return ()=> clearInterval(Interval)
+   }, [expires])
 
     return (
         <View style={styles.container}>
@@ -38,11 +55,11 @@ export default function GenerateCode({navigation, route}){
 
             <View style={styles.code}>
                 <View>
-                    <Text>{expires}</Text>
+                    <Text>{timer}</Text>
                 </View>
                 <View>
                     <Text style={styles.subTitleText}>One-time password code</Text>
-                    <Text style={styles.codeText}>{otp}</Text>
+                    <Text style={styles.codeText}>{code}</Text>
                 </View>
             </View>
         </View>
