@@ -9,7 +9,7 @@ export default function CodeBox({navigation, appName, accountKey}){
     }
 
     return(
-        <View style={styles.container} >
+        
         <TouchableOpacity style={styles.box} onPress={handlePress}>
             <View style={styles.user}>
                 <MaterialIcons  name="person" size={30} color={COLORS.background}/>
@@ -17,19 +17,14 @@ export default function CodeBox({navigation, appName, accountKey}){
             <Text>{appName}</Text>
             <MaterialIcons name="chevron-right" size={24} color={COLORS.surface}/>
         </TouchableOpacity>
-        </View>
+        
     )
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: "center",
-        padding: 16,
-        marginTop: 32,
-        
-    },
+    
     box: {
+        marginTop: 32,
         width: SIZES.width - (SIZES.width * 5/100),
         height: 72,
         backgroundColor: COLORS.background,
