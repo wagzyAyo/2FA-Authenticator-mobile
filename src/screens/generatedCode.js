@@ -34,13 +34,13 @@ export default function GenerateCode({navigation, route}){
                 generated to verify your sign-ins</Text>
             </View>
 
-            <View>
+            <View style={styles.code}>
                 <View>
                     {/* Timer here */}
                 </View>
                 <View>
-                    <Text>One-time password code</Text>
-                    <Text>{/* Code here */}</Text>
+                    <Text style={styles.subTitleText}>One-time password code</Text>
+                    <Text style={styles.codeText}>{/* Code here */}</Text>
                 </View>
             </View>
         </View>
@@ -82,6 +82,18 @@ const getStyles = (themeMode) => StyleSheet.create({
         textAlign:'left',
         fontSize: SIZES.bodyLarge,
         letterSpacing: 0.5,
+    },
+    code: {
+        marginTop: 24,
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 23,
+    },
+    codeText: {
+        color: COLORS.secondary,
+        fontSize: SIZES.h3,
+        fontWeight: 'bold',
+        letterSpacing: 0.15,
     }
 
 })
