@@ -18,18 +18,23 @@ export default function GenerateCode({navigation, route}){
 
    const generateCode = ()=>{
     const {otp, expires} = TOTP.generate(String(accountKey));
-    setCode(otp);
+    
+    return ({otp,expires})
    };
 
 
    const updateTimeRemaining = ()=>{
+    const {expires, otp} = generateCode();
+    setCode(otp);
+    const currentTime = Date.now();
+    const timeLeft = Math.floor((expires - currentTime) / 1000);
+    setTimer(timeLeft)
     
-    setTimer(prevTime =>{
-        if(prevTime < 1){
+    setTimer(time =>{
+        if(time< 1){
             generateCode();
-            return 30;
         }
-        return prevTime -1
+        return time
     })
    }
 
