@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState} from "react";
 import { Text, View, StyleSheet, Animated } from "react-native";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Feather from 'react-native-vector-icons/Feather';
 import { ThemeContext } from "../components/Theme";
 import { COLORS, SIZES } from "../styles";
 import {TOTP} from 'totp-generator'
@@ -57,7 +58,7 @@ export default function GenerateCode({navigation, route}){
             />
             <View style={styles.title}>
             <View style={styles.user}>
-                <MaterialIcons  name="person" size={30} 
+                <Feather  name="user" size={30} 
                 color={themeMode ? COLORS.surface : COLORS.background}/>
             </View>
                 <Text style={styles.textTitle}>{appName}</Text>
@@ -97,6 +98,8 @@ const getStyles = (themeMode) => StyleSheet.create({
         width: 48,
         borderRadius: 50,
         backgroundColor: themeMode ? COLORS.background : COLORS.surface,
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     textTitle: {
         left: SIZES.width /4,
@@ -136,7 +139,9 @@ const getStyles = (themeMode) => StyleSheet.create({
         height: 40,
         borderRadius: 50, 
         borderWidth: 5,
-        borderColor: COLORS.secondary
+        borderColor: COLORS.secondary,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 
 })

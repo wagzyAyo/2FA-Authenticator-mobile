@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Feather from 'react-native-vector-icons/Feather';
 import { COLORS, SIZES } from "../styles";
 
 export default function CodeBox({navigation, appName, accountKey}){
@@ -12,9 +13,9 @@ export default function CodeBox({navigation, appName, accountKey}){
         
         <TouchableOpacity style={styles.box} onPress={handlePress}>
             <View style={styles.user}>
-                <MaterialIcons  name="person" size={30} color={COLORS.background}/>
+                <Feather  name="user" size={30} color={COLORS.background}/>
             </View>
-            <Text>{appName}</Text>
+            <Text style={styles.text}>{appName}</Text>
             <MaterialIcons name="chevron-right" size={24} color={COLORS.surface}/>
         </TouchableOpacity>
         
@@ -24,8 +25,9 @@ export default function CodeBox({navigation, appName, accountKey}){
 const styles = StyleSheet.create({
     
     box: {
+        padding: 8,
         marginTop: 32,
-        width: SIZES.width - (SIZES.width * 5/100),
+        width: SIZES.width - (SIZES.width * 10/100),
         height: 72,
         backgroundColor: COLORS.background,
         flexDirection: 'row',
@@ -47,5 +49,12 @@ const styles = StyleSheet.create({
         width: 48,
         borderRadius: 50,
         backgroundColor: COLORS.surface,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    text: {
+        fontSize: SIZES.h3,
+        fontWeight: 'bold',
+        letterSpacing: 0.15,
     }
 })

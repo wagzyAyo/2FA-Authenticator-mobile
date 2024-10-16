@@ -185,5 +185,6 @@ const getStyles = (themeMode) => StyleSheet.create({
     },
     main: {
         marginTop: 50,
+        padding: 16,
     }
 });
