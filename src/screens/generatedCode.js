@@ -9,7 +9,7 @@ import {TOTP} from 'totp-generator'
 export default function GenerateCode({navigation, route}){
     const {themeMode} = useContext(ThemeContext);
     const {appName, accountKey} = route.params
-    const animation = useState(new Animated.Value(1))[0];
+   
 
     const styles = getStyles(themeMode)
    const [timer, setTimer] = useState(30);
@@ -40,27 +40,6 @@ export default function GenerateCode({navigation, route}){
     return ()=> clearInterval(Interval)
    }, []);
 
-   useEffect(() => {
-    Animated.timing(animation, {
-        toValue: 0,
-        duration: 30000, // 30 seconds
-        useNativeDriver: false,
-    }).start(() => {
-        animation.setValue(1); // Reset animation for next cycle
-    });
-}, [timer]); 
-
-const animatedStyle = {
-    transform: [
-        {
-            scale: animation.interpolate({
-                inputRange: [0, 1],
-                outputRange: [1, 0], // Scale from 1 to 0
-            }),
-        },
-    ],
-    borderColor: COLORS.secondary,
-};
 
     return (
         <View style={styles.container}>
@@ -152,9 +131,7 @@ const getStyles = (themeMode) => StyleSheet.create({
         height: 40,
         borderRadius: 50, 
         borderWidth: 5,
-        borderColor: COLORS.secondary,
-        // alignContent: 'center',
-        // textAlign: 'center'
+        borderColor: COLORS.secondary
     },
 
 })
