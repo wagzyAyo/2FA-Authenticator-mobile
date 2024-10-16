@@ -51,7 +51,13 @@ export default function Home({ navigation }) {
             }
         }
         getAppsData();
-    }, [])
+
+        const focusListener = navigation.addListener('focus', getAppsData);
+        
+        return ()=>{
+            navigation.removeListerner('focus', focusListener)
+        }
+    }, [navigation])
 
     return (
         <View style={styles.container}>
@@ -182,6 +188,7 @@ const getStyles = (themeMode) => StyleSheet.create({
         shadowRadius: 10,
         shadowOpacity: 0.20,
         elevation: 5,
+        zIndex: 1000,
     },
     main: {
         marginTop: 50,

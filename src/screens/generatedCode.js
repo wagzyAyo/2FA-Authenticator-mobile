@@ -106,6 +106,7 @@ const getStyles = (themeMode) => StyleSheet.create({
         color: themeMode ? COLORS.background : COLORS.surface,
         fontSize: SIZES.h3,
         fontWeight: 'bold',
+        letterSpacing: 0.15,
     },
     subTitle: {
         marginTop: 24,

@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     box: {
         padding: 8,
         marginTop: 32,
-        width: SIZES.width - (SIZES.width * 10/100),
+        width: SIZES.width - (SIZES.width * 7/100),
         height: 72,
         backgroundColor: COLORS.background,
         flexDirection: 'row',
