@@ -1,10 +1,11 @@
 import { useContext, useEffect, useState} from "react";
-import { Text, View, StyleSheet, Animated } from "react-native";
+import { Text, View, StyleSheet, Animated, TouchableOpacity } from "react-native";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Feather from 'react-native-vector-icons/Feather';
 import { ThemeContext } from "../components/Theme";
 import { COLORS, SIZES } from "../styles";
-import {TOTP} from 'totp-generator'
+import {TOTP} from 'totp-generator';
+import * as Clipboard from 'expo-clipboard';
 
 
 export default function GenerateCode({navigation, route}){
@@ -46,6 +47,11 @@ export default function GenerateCode({navigation, route}){
     return ()=> clearInterval(Interval)
    }, []);
 
+   const copyToClipboard = async ()=>{
+    await Clipboard.setStringAsync(code);
+    alert("Code copied to clipboard")
+   }
+
 
     return (
         <View style={styles.container}>
@@ -75,7 +81,9 @@ export default function GenerateCode({navigation, route}){
                 </View>
                 <View>
                     <Text style={styles.subTitleText}>One-time password code</Text>
-                    <Text style={styles.codeText}>{code}</Text>
+                    <TouchableOpacity onPress={copyToClipboard}>
+                      <Text style={styles.codeText}>{code}</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
         </View>
