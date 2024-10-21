@@ -77,7 +77,7 @@ export default function GenerateCode({navigation, route}){
 
             <View style={styles.code}>
                 <View style={styles.circle}>
-                    <Text>{timer}</Text>
+                    <Text style={styles.timerText}>{timer}</Text>
                 </View>
                 <View>
                     <Text style={styles.subTitleText}>One-time password code</Text>
@@ -152,5 +152,10 @@ const getStyles = (themeMode) => StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
+    timerText: {
+        color: themeMode ? COLORS.background : COLORS.surface,
+        fontSize: SIZES.caption,
+        letterSpacing: 0.4,
+    }
 
 })
