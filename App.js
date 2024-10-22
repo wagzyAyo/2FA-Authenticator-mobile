@@ -38,6 +38,26 @@ function AppContent() {
   const {authenticated, setAuthenticated} = useContext(AuthContext);
   const styles = getStyles(themeMode);
 
+  useEffect(()=>{
+    const loadAuth = async ()=>{
+      try {
+          const token = await AsyncStorage.getItem('token');
+          if (token){
+              setAuthenticated(true);
+          }else{
+              setAuthenticated(false)
+          }
+          // console.log(token)
+          console.log("Authenticated:", token ? true : false);
+      } catch (err) {
+          console.log('Error retrieving token');
+      }
+      ;
+  };
+
+  loadAuth()
+  }, [])
+
   const btnLabel = (label) => {
     return (
       <View style={styles.label}>

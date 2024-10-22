@@ -8,7 +8,7 @@ export const AuthContext = createContext();
 
 export const ThemeProvider = ({children})=> {
     const [themeMode, setThemeMode] = useState(false);
-    const [showhome, setShowHome] = useState(loadOnboarding);
+    const [showhome, setShowHome] = useState(false);
     const [authenticated, setAuthenticated] = useState(false);
 
     const loadTheme = async()=>{
@@ -26,21 +26,9 @@ export const ThemeProvider = ({children})=> {
         }
     };
 
-    const loadAuth = async ()=>{
-        try {
-            const token = await AsyncStorage.getItem('token');
-            setAuthenticated(!!token);
-            console.log(token)
-        } catch (err) {
-            console.log('Error retrieving token');
-        }
-        ;
-    }
-
     useEffect(()=>{
         loadTheme();
         loadOnboarding();
-        loadAuth();
     }, [])
 
     
