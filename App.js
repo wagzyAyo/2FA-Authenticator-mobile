@@ -1,5 +1,5 @@
 import './gesture-handler';
-import { useState, useEffect} from 'react';
+import { useState, useEffect, useContext} from 'react';
 import CustomStatusBar from './src/components/customStatusBar';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import { SIZES, COLORS } from './src/styles';
@@ -17,13 +17,14 @@ import About from './src/screens/About';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Settings from './src/screens/Settings';
 import GenerateCode from './src/screens/generatedCode';
-import { ThemeProvider} from './src/components/Theme'; 
+import { ThemeContext, ThemeProvider} from './src/components/Theme'; 
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   const [showhome, setShowHome] = useState(false);
   const [authenticated, setAuthenticated] = useState(false);
+
 
   useEffect(() => {
     const checkAuthentication = async () => {
@@ -36,6 +37,19 @@ export default function App() {
     };
     checkAuthentication();
   }, []);
+
+  
+  // Wrap entire app with ThemeProvider to ensure all components can access ThemeContext
+  return (
+    <ThemeProvider>
+      <AppContent authenticated={authenticated} showhome={showhome} setShowHome={setShowHome}/>
+    </ThemeProvider>
+  );
+}
+
+function AppContent({ authenticated, setShowHome, showhome }) {
+  const themeMode = useContext(ThemeContext);
+  const styles = getStyles(themeMode);
 
   const btnLabel = (label) => {
     return (
@@ -68,24 +82,16 @@ export default function App() {
         activeDotStyle={{
           backgroundColor: COLORS.primary,
         }}
+        dotStyle={{backgroundColor: themeMode ? COLORS.background : COLORS.surface}}
         onDone={() => setShowHome(!showhome)}
         showSkipButton
-        renderSkipButton={() => btnLabel('Skip')}
+        renderSkipButton={() => btnLabel('Skip', styles.skipAndDoneBtn) }
         renderNextButton={() => <NextBtn />}
-        renderDoneButton={() => btnLabel('Done')}
+        renderDoneButton={() => btnLabel('Done', styles.skipAndDoneBtn)}
       />
     );
   }
-  
-  // Wrap entire app with ThemeProvider to ensure all components can access ThemeContext
-  return (
-    <ThemeProvider>
-      <AppContent authenticated={authenticated} />
-    </ThemeProvider>
-  );
-}
 
-function AppContent({ authenticated }) {
   return (
     <NavigationContainer>
       <Stack.Navigator
@@ -111,19 +117,22 @@ function AppContent({ authenticated }) {
 }
 
 
-const styles = StyleSheet.create({
+const getStyles = (themeMode) => StyleSheet.create({
   onboard: {
+    backgroundColor: themeMode ? COLORS.surface : COLORS.background,
     flex: 1,
     alignItems: 'center',
     padding: 16,
     paddingTop: 110,
   },
   title: {
+    color: themeMode ? COLORS.background : COLORS.surface,
     marginTop: 64,
     fontSize: SIZES.h2,
     fontWeight: 'bold',
   },
   description: {
+    color: themeMode ? COLORS.background : COLORS.surface,
     textAlign: 'center',
     marginTop: 32,
     fontSize: SIZES.bodySmall,
@@ -132,8 +141,8 @@ const styles = StyleSheet.create({
     padding: 12,
   },
   labelText: {
+    color: themeMode ? COLORS.background : COLORS.surface,
     fontSize: SIZES.bodyLarge,
-    color: COLORS.surface,
     letterSpacing: 0.5,
   },
 });
