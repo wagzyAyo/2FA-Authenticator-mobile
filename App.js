@@ -17,38 +17,25 @@ import About from './src/screens/About';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Settings from './src/screens/Settings';
 import GenerateCode from './src/screens/generatedCode';
-import { ThemeContext, ThemeProvider} from './src/components/Theme'; 
+import { AppContext, ThemeContext, ThemeProvider, AuthContext} from './src/components/Theme'; 
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const [showhome, setShowHome] = useState(false);
-  const [authenticated, setAuthenticated] = useState(false);
-
-
-  useEffect(() => {
-    const checkAuthentication = async () => {
-      try {
-        const token = await AsyncStorage.getItem('token');
-        setAuthenticated(!!token);
-      } catch (err) {
-        console.log('Error retrieving token');
-      }
-    };
-    checkAuthentication();
-  }, []);
 
   
   // Wrap entire app with ThemeProvider to ensure all components can access ThemeContext
   return (
     <ThemeProvider>
-      <AppContent authenticated={authenticated} showhome={showhome} setShowHome={setShowHome}/>
+      <AppContent />
     </ThemeProvider>
   );
 }
 
-function AppContent({ authenticated, setShowHome, showhome }) {
-  const themeMode = useContext(ThemeContext);
+function AppContent() {
+  const {themeMode} = useContext(ThemeContext);
+  const {setShowHome, showhome} = useContext(AppContext)
+  const {authenticated, setAuthenticated} = useContext(AuthContext);
   const styles = getStyles(themeMode);
 
   const btnLabel = (label) => {
@@ -83,7 +70,7 @@ function AppContent({ authenticated, setShowHome, showhome }) {
           backgroundColor: COLORS.primary,
         }}
         dotStyle={{backgroundColor: themeMode ? COLORS.background : COLORS.surface}}
-        onDone={() => setShowHome(!showhome)}
+        onDone={async () => {await AsyncStorage.setItem("Home", JSON.stringify(true)); setShowHome(true)}}
         showSkipButton
         renderSkipButton={() => btnLabel('Skip', styles.skipAndDoneBtn) }
         renderNextButton={() => <NextBtn />}

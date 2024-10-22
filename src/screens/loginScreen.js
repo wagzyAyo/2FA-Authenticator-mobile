@@ -1,16 +1,18 @@
-import { useState } from "react"
+import { useState, useContext } from "react"
 import { Text, View, StyleSheet, TextInput, Image, TouchableOpacity, Alert } from "react-native"
 import { COLORS, SIZES } from "../styles";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ThemeContext } from "../components/Theme";
 
 export default function LoginScreen ({navigation}) {
+    const {themeMode} = useContext(ThemeContext)
 
 const [email, setEmail] = useState("");
 const [password, setPassword] = useState("");
 const [passwordVisible, setPasswordVisible] = useState("false");
 
-
+const styles = getStyles(themeMode)
 const handleLogin = async ()=>{
     if (email && password){
         try {
@@ -52,12 +54,14 @@ const handleLogin = async ()=>{
            
             <Text style={styles.title}>Login into your account</Text>
             <TextInput style={styles.input} 
+              placeholderTextColor={themeMode ? COLORS.background : COLORS.surface}
               placeholder="Email"
               onChangeText={(text) => setEmail(text)}
               value={email}
             />
             <View style={styles.inputContainer}>
                 <TextInput style={styles.inputPassword} 
+                placeholderTextColor={themeMode ? COLORS.background : COLORS.surface}
                 placeholder="Password"
                 onChangeText={(text) => setPassword(text)}
                 value={password}
@@ -70,7 +74,7 @@ const handleLogin = async ()=>{
                     <MaterialIcons
                         name={passwordVisible ? "visibility-off" : "visibility"}
                         size={24}
-                        color={COLORS.surface}
+                        color={themeMode ? COLORS.background : COLORS.surface}
                     />
                 </TouchableOpacity>
             </View>
@@ -103,13 +107,14 @@ const handleLogin = async ()=>{
     )
 }
 
-const styles = StyleSheet.create({
+const getStyles = (themeMode)=> StyleSheet.create({
     container: {
+        flex: 1,
+        backgroundColor: themeMode ? COLORS.surface : COLORS.background,
         padding: 16,
-        marginTop: 120,
     },
     logoContainer: {
-        flex: 1,
+        marginTop: 50,
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: 32,
@@ -123,7 +128,8 @@ const styles = StyleSheet.create({
         marginTop: 16,
         fontSize: SIZES.h3,
         fontWeight: 'bold',
-        letterSpacing: 0.15
+        letterSpacing: 0.15,
+        color: themeMode ? COLORS.background : COLORS.surface,
     },
     input: {
         marginTop: 24,
@@ -132,6 +138,7 @@ const styles = StyleSheet.create({
         borderColor: COLORS.primary,
         borderRadius: 10,
         padding: 16,
+        color: themeMode ? COLORS.background : COLORS.surface,
     },
     inputContainer: {
         width: SIZES.width - 32,
@@ -147,14 +154,17 @@ const styles = StyleSheet.create({
     inputPassword: {
         flex: 1,
         padding: 16,
+        color: themeMode ? COLORS.background : COLORS.surface,
     },
 
     eyeIcon: {
+        color: themeMode ? COLORS.background : COLORS.surface,
         position: "absolute",
         right: 10,
         top: 20,
     },
     fingerPrint: {
+        color: themeMode ? COLORS.background : COLORS.surface,
         marginTop: 32,
         justifyContent: 'center',
         alignItems: 'center',
@@ -176,6 +186,7 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
     option: {
+        color: themeMode ? COLORS.background : COLORS.surface,
         marginTop: 24,
         textAlign: 'center'
     },
@@ -200,12 +211,13 @@ const styles = StyleSheet.create({
         height: 13,
     },
     btnTextStroke: {
-        color: COLORS.surface,
+        color: themeMode ? COLORS.background : COLORS.surface,
         display: 'flex',
         textAlign: 'center',
     },
 
     navSignup: {
+        color: themeMode ? COLORS.background : COLORS.surface,
         textAlign: 'center',
         fontSize: SIZES.bodyLarge,
         letterSpacing: 0.5,
