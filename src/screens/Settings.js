@@ -2,11 +2,12 @@ import React, { useState, useRef, useContext } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Animated, Easing, TouchableWithoutFeedback, Image, Switch } from "react-native";
 import { COLORS, SIZES } from "../styles";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { ThemeContext } from '../components/Theme';
+import { ThemeContext, AppContext } from '../components/Theme';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Settings({ navigation }) {
     const {themeMode, toggleTheme} = useContext(ThemeContext);
+    const {setShowHome} = useContext(AppContext)
     const [drawerOpen, setDrawerOpen] = useState(false);
     const slideAnim = useRef(new Animated.Value(-300)).current; // Initial position of the drawer offscreen
 
@@ -93,7 +94,7 @@ export default function Settings({ navigation }) {
                         <Animated.View style={[styles.drawer, { transform: [{ translateX: slideAnim }] }]}>
                             <Text style={styles.drawerText} onPress={() => navigation.navigate('Home')}>View codes</Text>
                             <Text style={styles.drawerText} onPress={()=>toggleTheme()}>Dark Mode</Text>
-                            <Text style={styles.drawerText}>How It Works</Text>
+                            <Text style={styles.drawerText} onPress={()=> setShowHome(false)}>How It Works</Text>
                             <Text style={styles.drawerText} onPress={() => navigation.navigate('About')}>About</Text>
                             <Text style={styles.drawerText} onPress={() => navigation.navigate('Settings')}>Settings</Text>
                         </Animated.View>
