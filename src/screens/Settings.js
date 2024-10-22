@@ -1,13 +1,16 @@
 import React, { useState, useRef, useContext } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Animated, Easing, TouchableWithoutFeedback, Image, Switch } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Animated, Easing, TouchableWithoutFeedback, Image, Switch, Alert } from "react-native";
 import { COLORS, SIZES } from "../styles";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { ThemeContext, AppContext } from '../components/Theme';
+import { ThemeContext, AppContext,BiometricContext  } from '../components/Theme';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Settings({ navigation }) {
     const {themeMode, toggleTheme} = useContext(ThemeContext);
-    const {setShowHome} = useContext(AppContext)
+    const {setShowHome} = useContext(AppContext);
+    const {allowBiometric, setAllowBiometric, toggleBiometric} = useContext(BiometricContext)
+    const [darkMode, setDarkMode] = useState(themeMode);
+    const [biometric, setBiometric] = useState(allowBiometric)
     const [drawerOpen, setDrawerOpen] = useState(false);
     const slideAnim = useRef(new Animated.Value(-300)).current; // Initial position of the drawer offscreen
 
@@ -43,6 +46,16 @@ export default function Settings({ navigation }) {
         await AsyncStorage.removeItem('token');
         Alert.alert('Loging out.');
         navigation.navigate('Login')
+    };
+
+    const handleDarkModeToggle = ()=>{
+        setDarkMode(prevState => !prevState )
+        toggleTheme()
+    };
+
+    const handleBiometric = ()=>{
+        setBiometric(prevMode => !prevMode);
+        toggleBiometric()
     }
 
     return (
@@ -73,12 +86,12 @@ export default function Settings({ navigation }) {
                 </Text>
                 <View style={styles.manage}>
                     <TouchableOpacity style={styles.btnContainer}>
-                        <Text>Dark Mode</Text><Switch value='true'></Switch>
+                        <Text>Dark Mode</Text><Switch value={darkMode} onValueChange={handleDarkModeToggle}></Switch>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.btnContainer}>
-                        <Text>Biometrics login</Text><Switch></Switch>
+                        <Text>Biometrics login</Text><Switch value={biometric} onValueChange={handleBiometric}></Switch>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={()=> handleLogout} style={styles.btnContainer}>
+                    <TouchableOpacity onPress={()=> handleLogout()} style={styles.btnContainer}>
                         <View style={styles.logBtn}>
                         <MaterialIcons name='logout' size={24}/>
                         <Text >Logout</Text>

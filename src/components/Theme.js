@@ -5,11 +5,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export const ThemeContext = createContext();
 export const AppContext = createContext();
 export const AuthContext = createContext();
+export const BiometricContext = createContext()
 
 export const ThemeProvider = ({children})=> {
     const [themeMode, setThemeMode] = useState(false);
     const [showhome, setShowHome] = useState(false);
     const [authenticated, setAuthenticated] = useState(false);
+    const [allowBiometric, setAllowBiometric] = useState(false)
 
     const loadTheme = async()=>{
         const savedTheme = await AsyncStorage.getItem('DarkMode')
@@ -26,9 +28,19 @@ export const ThemeProvider = ({children})=> {
         }
     };
 
+    const checkBiometrics = async ()=>{
+        const biometric = await AsyncStorage.getItem('biometric');
+        if (biometric){
+            setAllowBiometric(true);
+        }else{
+            setAllowBiometric(false)
+        }
+    }
+
     useEffect(()=>{
         loadTheme();
         loadOnboarding();
+        checkBiometrics();
     }, [])
 
     
@@ -43,12 +55,22 @@ export const ThemeProvider = ({children})=> {
          return newMode
       })
     }
+    const toggleBiometric = async ()=>{
+        
+        setAllowBiometric((prevMode) => {
+            const newMode = !prevMode
+         AsyncStorage.setItem('biometric', JSON.stringify(newMode))
+         return newMode
+      })
+    }
 
     return (
         <ThemeContext.Provider value={{themeMode, toggleTheme}}>
             <AppContext.Provider value={{setShowHome, showhome}}>
                 <AuthContext.Provider value={{authenticated, setAuthenticated}}>
-               {children}
+                    <BiometricContext.Provider value={{allowBiometric, setAllowBiometric, toggleBiometric}}>
+                       {children}
+                    </BiometricContext.Provider>
                </AuthContext.Provider>
             </AppContext.Provider>
            
