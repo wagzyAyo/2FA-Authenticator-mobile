@@ -7,7 +7,8 @@ export const COLORS = {
     primary: "#0AADAD",
     secondary: "#3096BD",
     background: "#FFFFFF",
-    surface: "#000000"
+    surface: "#000000",
+    error: "#EE2525"
 }
 
 export const SIZES = {
