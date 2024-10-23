@@ -5,7 +5,9 @@ import { COLORS, SIZES } from "../styles";
 import { ThemeContext } from "./Theme";
 
 export default function Invalid({navigation}){
-    const {themeMode} = useContext(ThemeContext)
+    const {themeMode} = useContext(ThemeContext);
+
+    const styles = getStyles(themeMode)
 
     return(
         <View style={styles.container}>
@@ -26,8 +28,9 @@ export default function Invalid({navigation}){
     )
 }
 
-const styles = StyleSheet.create({
+const getStyles = (themeMode)=> StyleSheet.create({
     container: {
+        backgroundColor: themeMode ? COLORS.surface : COLORS.background,
         flex: 1,
         padding: 16,
     },
@@ -57,5 +60,6 @@ const styles = StyleSheet.create({
         fontSize: SIZES.bodyLarge,
         letterSpacing: 0.5,
         textAlign: 'center',
+        color: themeMode ? COLORS.background : COLORS.surface,
     }
 })
