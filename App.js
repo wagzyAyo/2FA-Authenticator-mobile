@@ -17,6 +17,7 @@ import About from './src/screens/About';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Settings from './src/screens/Settings';
 import GenerateCode from './src/screens/generatedCode';
+import QrScanner from './src/components/qrCode';
 import { AppContext, ThemeContext, ThemeProvider, AuthContext} from './src/components/Theme'; 
 
 const Stack = createNativeStackNavigator();
@@ -116,6 +117,7 @@ function AppContent() {
           <Stack.Screen name="About" component={About} />
           <Stack.Screen name="Settings" component={Settings} />
           <Stack.Screen name="GeneratedCode" component={GenerateCode} />
+          <Stack.Screen name="QrScanner" component={QrScanner} />
         </>
       </Stack.Navigator>
       <CustomStatusBar />

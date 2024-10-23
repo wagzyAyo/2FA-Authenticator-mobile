@@ -2,3 +2,5 @@
     android:usesCleartextTraffic="true"
     ...
 >
+
+<uses-permission android:name="android.permission.VIBRATE"/>
