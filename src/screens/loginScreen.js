@@ -80,7 +80,7 @@ const handleLogin = async ()=>{
             </View>
             
             <View style={styles.fingerPrint}>
-                <MaterialIcons  name="fingerprint" size={26} color={SIZES.surface}/>
+                <MaterialIcons  name="fingerprint" size={26} color={themeMode ? COLORS.background : COLORS.surface}/>
             </View>
 
             <View>
