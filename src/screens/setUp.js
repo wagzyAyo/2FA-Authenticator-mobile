@@ -32,7 +32,7 @@ export default function SetUp({navigation}){
                     size={24}
                     color={themeMode ? COLORS.background : COLORS.surface}
                 />
-                <Text style={styles.text} onPress={navigation.navigate('QrScanner')}>Scan Qr code</Text>
+                <Text style={styles.text} onPress={()=>navigation.navigate('QrScanner')}>Scan Qr code</Text>
             </View>
             <View style={styles.select} >
                 <MaterialIcons 

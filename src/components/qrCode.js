@@ -1,18 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Alert } from 'react-native';
-import { BarCodeScanner } from 'expo-barcode-scanner';
+import { View, Text, Alert, Pressable } from 'react-native';
+import { useCameraPermissions } from 'expo-camera';
+import { Link } from 'expo-router';
 
 export default function QrScanner({navigation}) {
-  
+  const [permission, requestPermission] = useCameraPermissions();
+  const isPermissionGranted = Boolean(permission?.granted);
 
   return (
-    <BarCodeScanner
-      
-      style={{ flex: 1 }}
-    >
-      <View>
-        <Text>Scan a QR code</Text>
-      </View>
-    </BarCodeScanner>
+    <View>
+      <Pressable onPress={requestPermission}>
+        <Text>Request permission</Text>
+      </Pressable>
+      <Link href={'/scanner'} asChild>
+          <Pressable disabled={!isPermissionGranted}>
+             <Text>
+                Scan Code
+             </Text>
+          </Pressable>
+      </Link>
+    </View>
   );
 }
