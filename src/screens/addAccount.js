@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert } from "reac
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { SIZES, COLORS } from "../styles";
 import { ThemeContext } from '../components/Theme';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { handleSubmit } from '../utils/utils';
 
 
 
@@ -13,47 +13,8 @@ export default function AddAccount({navigation}) {
     const [accountName, setAccountName] = useState("");
     const [accountKey, setAccountKey] = useState("")
 
-    const styles = getStyles(themeMode)
-
-    const handleSubmit = async()=>{
-        if(!accountKey || !accountName){
-            Alert.alert('Please provide account name and key');
-            return;
-        }
-
-        try {
-            const response = await fetch('https://twofa-authenticator.onrender.com/api/addapp', 
-                {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify( {
-                        appName: accountName
-                    })
-                }
-            );
+    const styles = getStyles(themeMode);
     
-            const data = await response.json();
-    
-            if (response.status === 200){
-                
-                const existingAccount = await AsyncStorage.getItem('accounts');
-                const accounts = existingAccount ? JSON.parse(existingAccount) : [];
-                const newAccount = {appName: accountName, accountKey}
-                accounts.push(newAccount);
-                await AsyncStorage.setItem('accounts', JSON.stringify(accounts))
-                Alert.alert('Accounnt added');
-                navigation.navigate('Home');
-            } else{
-                Alert.alert('Error adding newApp')
-            }
-            
-        } catch (err) {
-            console.log(err);
-            Alert.alert("Error adding account", err.messge)
-        }
-        
-    }
-
     return (
         
 
@@ -84,7 +45,7 @@ export default function AddAccount({navigation}) {
                 style={styles.textInput}
             />
             </View>
-                <TouchableOpacity style={styles.btn} onPress={handleSubmit}>
+                <TouchableOpacity style={styles.btn} onPress={()=> handleSubmit(accountKey, accountName, navigation)}>
                     <Text style={styles.btnText}>Add</Text>
                 </TouchableOpacity>
             
