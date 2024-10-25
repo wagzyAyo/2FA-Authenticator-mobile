@@ -1,5 +1,14 @@
 import React, { useState, useRef, useContext, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Animated, Easing, TouchableWithoutFeedback, Image } from "react-native";
+import {
+     View,
+      Text, 
+      StyleSheet, 
+      TouchableOpacity, 
+      Animated, 
+      Easing, 
+      TouchableWithoutFeedback, 
+      Image, 
+      ScrollView } from "react-native";
 import { COLORS, SIZES } from "../styles";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import NoCode from "./noCode";
@@ -61,6 +70,7 @@ export default function Home({ navigation }) {
     }, [navigation])
 
     return (
+        <ScrollView>
         <View style={styles.container}>
             {/* Top navigation */}
             <View style={styles.topNav}>
@@ -118,6 +128,7 @@ export default function Home({ navigation }) {
                 </TouchableWithoutFeedback>
             )}
         </View>
+        </ScrollView>
     );
 }
 
