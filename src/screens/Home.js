@@ -70,7 +70,7 @@ export default function Home({ navigation }) {
     }, [navigation])
 
     return (
-        <ScrollView>
+        
         <View style={styles.container}>
             {/* Top navigation */}
             <View style={styles.topNav}>
@@ -89,6 +89,7 @@ export default function Home({ navigation }) {
 
                 <Text style={styles.textTitle}>Alpha <Text style={styles.text2}>Authenticator</Text></Text>
             </View>
+            <ScrollView>
             <View style={styles.main}>
                 {/* Main content */}
                 { data.length > 0 ? 
@@ -101,6 +102,7 @@ export default function Home({ navigation }) {
                     (<NoCode navigation={navigation} />)
                 }
             </View>
+            </ScrollView>
             
 
             {/* Floating button */}
@@ -128,7 +130,7 @@ export default function Home({ navigation }) {
                 </TouchableWithoutFeedback>
             )}
         </View>
-        </ScrollView>
+        
     );
 }
 
@@ -138,6 +140,10 @@ const getStyles = (themeMode) => StyleSheet.create({
         backgroundColor: themeMode ? COLORS.surface : COLORS.background,
     },
     topNav: {
+        backgroundColor: themeMode ? COLORS.surface : COLORS.background,
+        width: SIZES.width,
+        height: 40,
+        zIndex: 1,
         flexDirection: 'row',
         alignItems: 'center',
         position: "relative",
@@ -166,7 +172,7 @@ const getStyles = (themeMode) => StyleSheet.create({
         backgroundColor: themeMode ? COLORS.background : COLORS.surface,
         paddingTop: 50,
         paddingLeft: 20,
-        zIndex: 10, // Make sure it overlaps the content
+        zIndex: 10, 
     },
     drawerOverlay: {
         position: 'absolute',
@@ -200,9 +206,10 @@ const getStyles = (themeMode) => StyleSheet.create({
         shadowRadius: 10,
         shadowOpacity: 0.20,
         elevation: 5,
-        zIndex: 1000,
+        zIndex: 9,
     },
     main: {
+        zIndex: 0,
         marginTop: 50,
         padding: 16,
     }
