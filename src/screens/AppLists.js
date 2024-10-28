@@ -1,8 +1,8 @@
-import { useContext, useState, useRef } from "react";
-import { View, Text, StyleSheet , TouchableWithoutFeedback, TouchableOpacity, Animated, Easing, Image } from "react-native";
+import { useContext, useState, useRef, useEffect } from "react";
+import { View, Text, StyleSheet , TouchableWithoutFeedback, TouchableOpacity, Animated, Easing, Image, Alert } from "react-native";
 import { ThemeContext } from "../components/Theme";
 
-export default function UpdateApps({navigation}){
+export default function AppLists({navigation}){
     const {themeMode, toggleTheme} = useContext(ThemeContext);
 
     const {setShowHome} = useContext(AppContext)
@@ -10,7 +10,33 @@ export default function UpdateApps({navigation}){
     const [drawerOpen, setDrawerOpen] = useState(false);
     const slideAnim = useRef(new Animated.Value(-300)).current; // Initial position of the drawer offscreen
 
-    const styles = getStyles(themeMode)
+    const styles = getStyles(themeMode);
+
+    const getAppLists = async ()=>{
+        try {
+            const response = await fetch('https://twofa-authenticator.onrender.com/api/getapps', 
+                {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'}
+                }
+            );
+            const responseData = await response.json();
+            if(response.status === 200){
+                setData(responseData);
+            }else{
+                setData([])
+            }
+        } catch (err) {
+            console.log(err)
+            Alert.alert('Error fetching data from database')
+        }
+       
+    };
+
+    useEffect(()=>{
+        getAppLists();
+    }, [])
+
     const toggleDrawer = () => {
         if (drawerOpen) {
             Animated.timing(slideAnim, {
@@ -55,6 +81,12 @@ return(
 
                 <Text style={styles.textTitle}>Alpha <Text style={styles.text2}>Authenticator</Text></Text>
             </View>
+
+            {data.length() > 1 ? 
+            (data.map((app)=><View style={styles.box} onPress={()=>navigation.navigate("UpdateApp", app.appName)}>{app.appName}</View>)) :
+            (<Text>No app to show</Text>)
+            
+        }
 
 
             {/* Drawer menu - overlay */}
@@ -129,5 +161,25 @@ const getStyles = (themeMode)=>StyleSheet.create({
         color: themeMode ? COLORS.surface : COLORS.background,
         fontSize: 18,
         marginBottom: 20,
+    },
+    box: {
+        padding: 8,
+        marginTop: 32,
+        width: SIZES.width - (SIZES.width * 7/100),
+        height: 72,
+        backgroundColor: COLORS.background,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        shadowColor: '#000000',   // Black shadow
+    shadowOffset: {
+      width: 0,   // X = 0
+      height: 16, // Y = 16
+    },
+    shadowOpacity: 0.14,      // Opacity 14%
+    shadowRadius: 24,         // Blur = 24
+
+    // Android Shadow
+    elevation: 10,
     },
 })
