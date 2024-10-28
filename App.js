@@ -19,6 +19,7 @@ import Settings from './src/screens/Settings';
 import GenerateCode from './src/screens/generatedCode';
 import AppLists from './src/screens/AppLists';
 import QrScanner from './src/components/qrCode';
+import UpdateApp from './src/screens/UpdateApp'
 import { AppContext, ThemeContext, ThemeProvider, AuthContext} from './src/components/Theme'; 
 
 const Stack = createNativeStackNavigator();
@@ -120,6 +121,7 @@ function AppContent() {
           <Stack.Screen name="GeneratedCode" component={GenerateCode} />
           <Stack.Screen name="QrScanner" component={QrScanner} />
           <Stack.Screen name="AppLists" component={AppLists} />
+          <Stack.Screen name="UpdateApp" component={UpdateApp} />
         </>
       </Stack.Navigator>
       <CustomStatusBar />
