@@ -2,20 +2,26 @@ import React, { useState, useRef, useContext } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Animated, Easing, TouchableWithoutFeedback, Image, Switch, Alert } from "react-native";
 import { COLORS, SIZES } from "../styles";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { ThemeContext, AppContext,BiometricContext  } from '../components/Theme';
+import { ThemeContext, AppContext,BiometricContext, CameraContext  } from '../components/Theme';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Settings({ navigation }) {
     const {themeMode, toggleTheme} = useContext(ThemeContext);
     const {setShowHome} = useContext(AppContext);
-    const {allowBiometric, setAllowBiometric, toggleBiometric} = useContext(BiometricContext)
+    const {allowBiometric, toggleBiometric} = useContext(BiometricContext);
+    const {cameraAccess, toggleCamera} = useContext(CameraContext)
     const [darkMode, setDarkMode] = useState(themeMode);
-    const [biometric, setBiometric] = useState(allowBiometric)
+    const [biometric, setBiometric] = useState(allowBiometric);
+    const [camera, setCamera] = useState(cameraAccess);
     const [drawerOpen, setDrawerOpen] = useState(false);
     const slideAnim = useRef(new Animated.Value(-300)).current; // Initial position of the drawer offscreen
 
 
     const styles = getStyles(themeMode);
+
+    const handleNavigate = ()=>{
+        navigation.navigate('UpdateApp');
+    }
 
     const toggleDrawer = () => {
         if (drawerOpen) {
@@ -56,6 +62,11 @@ export default function Settings({ navigation }) {
     const handleBiometric = ()=>{
         setBiometric(prevMode => !prevMode);
         toggleBiometric()
+    };
+
+    const handleCamera = ()=>{
+        setCamera(prevMode => !prevMode);
+        toggleCamera()
     }
 
     return (
@@ -91,9 +102,18 @@ export default function Settings({ navigation }) {
                     <TouchableOpacity style={styles.btnContainer}>
                         <Text>Biometrics login</Text><Switch value={biometric} onValueChange={handleBiometric}></Switch>
                     </TouchableOpacity>
+                    <TouchableOpacity style={styles.btnContainer}>
+                        <Text>Allow Camera access</Text><Switch value={camera} onValueChange={handleCamera}></Switch>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.btnContainer} onPress={handleNavigate}>
+                        <View style={styles.logBtn}>
+                    <MaterialIcons name='apps' size={16}/>
+                        <Text>Apps</Text>
+                        </View>
+                    </TouchableOpacity>
                     <TouchableOpacity onPress={()=> handleLogout()} style={styles.btnContainer}>
                         <View style={styles.logBtn}>
-                        <MaterialIcons name='logout' size={24}/>
+                        <MaterialIcons name='logout' size={16}/>
                         <Text >Logout</Text>
                         </View> 
                     </TouchableOpacity>
