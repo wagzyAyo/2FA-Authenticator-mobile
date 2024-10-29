@@ -83,7 +83,7 @@ export const handleUpdate = async(accountKey, accountName, navigation)=>{
         
     } catch (err) {
         console.log(err);
-        Alert.alert("Error adding account", err.message)
+        Alert.alert("Error updating account", err.message)
     }
     
 }
