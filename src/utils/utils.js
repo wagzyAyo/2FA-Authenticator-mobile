@@ -74,7 +74,11 @@ export const handleUpdate = async(accountKey, accountName, navigation)=>{
             Alert.alert('Accounnt updated');
             navigation.navigate('Home')
         }else{
-            Alert.alert('Account not found')
+            const newAccount = {appName: accountName, accountKey}
+            accounts.push(newAccount);
+            await AsyncStorage.setItem('accounts', JSON.stringify(accounts))
+            Alert.alert('Accounnt apdated');
+            navigation.navigate('Home');
         }
         
     } catch (err) {
