@@ -20,7 +20,7 @@ export default function Settings({ navigation }) {
     const styles = getStyles(themeMode);
 
     const handleNavigate = ()=>{
-        navigation.navigate('UpdateApp');
+        navigation.navigate('AppLists');
     }
 
     const toggleDrawer = () => {

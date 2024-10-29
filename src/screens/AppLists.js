@@ -1,6 +1,7 @@
 import { useContext, useState, useRef, useEffect } from "react";
 import { View, Text, StyleSheet , TouchableWithoutFeedback, TouchableOpacity, Animated, Easing, Image, Alert } from "react-native";
-import { ThemeContext } from "../components/Theme";
+import { ThemeContext, AppContext } from "../components/Theme";
+import { COLORS,SIZES } from "../styles";
 
 export default function AppLists({navigation}){
     const {themeMode, toggleTheme} = useContext(ThemeContext);
@@ -16,11 +17,13 @@ export default function AppLists({navigation}){
         try {
             const response = await fetch('https://twofa-authenticator.onrender.com/api/getapps', 
                 {
-                    method: 'POST',
+                    method: 'GET',
                     headers: {'Content-Type': 'application/json'}
                 }
             );
+            
             const responseData = await response.json();
+            console.log({'fetchedData': responseData})
             if(response.status === 200){
                 setData(responseData);
             }else{
@@ -35,6 +38,7 @@ export default function AppLists({navigation}){
 
     useEffect(()=>{
         getAppLists();
+        console.log(data)
     }, [])
 
     const toggleDrawer = () => {
@@ -62,6 +66,16 @@ export default function AppLists({navigation}){
         }
     };
 
+    const handleAccountPress = (app)=>{
+        const appName = app?.name;
+        if(appName){
+            navigation.navigate('UpdateApp', {appName});
+        }else{
+            console.log(app)
+        }
+        
+    }
+
 return(
     <View>
          {/* Top navigation */}
@@ -82,8 +96,12 @@ return(
                 <Text style={styles.textTitle}>Alpha <Text style={styles.text2}>Authenticator</Text></Text>
             </View>
 
-            {data.length() > 1 ? 
-            (data.map((app)=><View style={styles.box} onPress={()=>navigation.navigate("UpdateApp", app.appName)}>{app.appName}</View>)) :
+            {data.length > 0 ? 
+            (data.map((app, index)=><TouchableOpacity key={index}  onPress={()=>handleAccountPress(app)}>
+                <View style={styles.box}>
+                    <Text>{app.name}</Text>
+                </View>
+                </TouchableOpacity>)) :
             (<Text>No app to show</Text>)
             
         }
