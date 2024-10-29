@@ -64,10 +64,10 @@ export const handleUpdate = async(accountKey, accountName, navigation)=>{
           
         const existingAccount = await AsyncStorage.getItem('accounts');
         const accounts = existingAccount ? JSON.parse(existingAccount) : [];
-        const accountIndex = accounts.findIndex((item)=>{
+        const accountIndex = accounts.findIndex((item)=>
             item.appName === accountName
-        })
-
+        )
+        console.log(accountIndex)
         if(accountIndex !== -1){
             accounts[accountIndex].accountKey = accountKey
             await AsyncStorage.setItem('accounts', JSON.stringify(accounts))

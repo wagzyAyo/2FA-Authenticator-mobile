@@ -45,7 +45,7 @@ export default function AddAccount({navigation, route}) {
                 style={styles.textInput}
             />
             </View>
-                <TouchableOpacity style={styles.btn} onPress={()=> handleUpdate(accountKey, accountName, navigation)}>
+                <TouchableOpacity style={styles.btn} onPress={()=> handleUpdate(accountKey, appName, navigation)}>
                     <Text style={styles.btnText}>Add</Text>
                 </TouchableOpacity>
             
