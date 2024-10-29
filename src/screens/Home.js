@@ -142,7 +142,7 @@ const getStyles = (themeMode) => StyleSheet.create({
     topNav: {
         backgroundColor: themeMode ? COLORS.surface : COLORS.background,
         width: SIZES.width,
-        height: 40,
+        height: 80,
         zIndex: 1,
         flexDirection: 'row',
         alignItems: 'center',

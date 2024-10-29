@@ -23,7 +23,7 @@ export default function AddAccount({navigation, route}) {
             <MaterialIcons 
                 name={'arrow-back'}
                 size={24}
-                onPress={()=>(navigation.navigate('SetUp'))}
+                onPress={()=>(navigation.navigate('AppLists'))}
                 color={themeMode ? COLORS.background : COLORS.surface}
                 />
                 <Text style={styles.titleText}>Enter Account details</Text>

@@ -1,5 +1,14 @@
 import { useContext, useState, useRef, useEffect } from "react";
-import { View, Text, StyleSheet , TouchableWithoutFeedback, TouchableOpacity, Animated, Easing, Image, Alert } from "react-native";
+import { View, 
+    Text, 
+    StyleSheet , 
+    TouchableWithoutFeedback, 
+    TouchableOpacity, 
+    Animated, 
+    Easing, 
+    Image, 
+    Alert, 
+    ScrollView } from "react-native";
 import { ThemeContext, AppContext } from "../components/Theme";
 import { COLORS,SIZES } from "../styles";
 
@@ -23,7 +32,7 @@ export default function AppLists({navigation}){
             );
             
             const responseData = await response.json();
-            console.log({'fetchedData': responseData})
+            //console.log({'fetchedData': responseData})
             if(response.status === 200){
                 setData(responseData);
             }else{
@@ -77,7 +86,7 @@ export default function AppLists({navigation}){
     }
 
 return(
-    <View>
+    <View style={styles.container}>
          {/* Top navigation */}
          <View style={styles.topNav}>
                 <TouchableOpacity onPress={toggleDrawer}>
@@ -95,16 +104,24 @@ return(
 
                 <Text style={styles.textTitle}>Alpha <Text style={styles.text2}>Authenticator</Text></Text>
             </View>
-
+            <ScrollView>
+            <Text style={styles.topText}>
+                If you’re a returning user or need to update an app’s key, click on the app name to update it.
+            </Text>
             {data.length > 0 ? 
-            (data.map((app, index)=><TouchableOpacity key={index}  onPress={()=>handleAccountPress(app)}>
+            (data.map((app, index)=>
+
+            <TouchableOpacity key={index}  onPress={()=>handleAccountPress(app)}>
+                
                 <View style={styles.box}>
-                    <Text>{app.name}</Text>
+                    <Text style={styles.boxText}>{app.name}</Text>
                 </View>
-                </TouchableOpacity>)) :
-            (<Text>No app to show</Text>)
+                
+            </TouchableOpacity>)) :
+            (<Text style={styles.text2}>No app to show</Text>)
             
         }
+        </ScrollView>
 
 
             {/* Drawer menu - overlay */}
@@ -129,12 +146,14 @@ return(
 const getStyles = (themeMode)=>StyleSheet.create({
     container: {
         flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
         backgroundColor: themeMode ? COLORS.surface : COLORS.background,
     },
     topNav: {
         backgroundColor: themeMode ? COLORS.surface : COLORS.background,
         width: SIZES.width,
-        height: 40,
+        height: 80,
         zIndex: 1,
         flexDirection: 'row',
         alignItems: 'center',
@@ -153,6 +172,8 @@ const getStyles = (themeMode)=>StyleSheet.create({
         color: COLORS.secondary,
     },
     text2: {
+        marginTop: SIZES.height /2,
+        fontSize: SIZES.h2,
         color: themeMode ? COLORS.background : COLORS.surface,
     },
     drawer: {
@@ -182,13 +203,13 @@ const getStyles = (themeMode)=>StyleSheet.create({
     },
     box: {
         padding: 8,
-        marginTop: 32,
+        marginTop: 40,
+        zIndex: -1,
         width: SIZES.width - (SIZES.width * 7/100),
         height: 72,
         backgroundColor: COLORS.background,
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between',
         shadowColor: '#000000',   // Black shadow
     shadowOffset: {
       width: 0,   // X = 0
@@ -200,4 +221,15 @@ const getStyles = (themeMode)=>StyleSheet.create({
     // Android Shadow
     elevation: 10,
     },
+    topText: {
+        zIndex: -1,
+        marginTop: 50 + 32,
+        fontSize: SIZES.bodyLarge,
+        letterSpacing: 0.5,
+    },
+    boxText: {
+        fontSize: SIZES.h2,
+        fontWeight: 'bold',
+        letterSpacing: 0.15,
+    }
 })
