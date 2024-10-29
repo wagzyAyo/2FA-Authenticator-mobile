@@ -17,6 +17,7 @@
     "expo-barcode-scanner": "^13.0.1",
     "expo-camera": "^15.0.16",
     "expo-clipboard": "^6.0.3",
+    "expo-local-authentication": "^14.0.1",
     "expo-router": "^3.5.23",
     "expo-status-bar": "~1.12.1",
     "fetch": "^1.1.0",

@@ -1,9 +1,10 @@
-import { useState, useContext } from "react"
+import { useState, useContext, useEffect } from "react"
 import { Text, View, StyleSheet, TextInput, Image, TouchableOpacity, Alert } from "react-native"
 import { COLORS, SIZES } from "../styles";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ThemeContext } from "../components/Theme";
+import LocalAuthentication from 'expo-local-authentication'
 
 export default function LoginScreen ({navigation}) {
     const {themeMode} = useContext(ThemeContext)
@@ -11,6 +12,7 @@ export default function LoginScreen ({navigation}) {
 const [email, setEmail] = useState("");
 const [password, setPassword] = useState("");
 const [passwordVisible, setPasswordVisible] = useState("false");
+const [isBiometricSupported, setIsBiometricSupported] = useState(false)
 
 const styles = getStyles(themeMode)
 const handleLogin = async ()=>{
@@ -42,6 +44,30 @@ const handleLogin = async ()=>{
         }
     }else{
         Alert.alert("Enter both Email and Password")
+    }
+};
+
+useEffect(()=>{
+    (async ()=>{
+        const compatible = LocalAuthentication.hasHardwareAsync();
+        setIsBiometricSupported(compatible)
+    })();
+}, []);
+
+const handleBioAuth = async ()=>{
+    const savedBiometric = await LocalAuthentication.isEnrolledAsync();
+    if(!savedBiometric){
+        return Alert.alert(
+            "Biometric record not found",
+            "please verify your identity with your password",
+            "OK",
+        )
+    }else{
+        const bioAuth = await LocalAuthentication.authenticateAsync({
+            promptMessage: 'Login with your finger print',
+            disableDeviceFallback: true
+        })
+        console.log(bioAuth)
     }
 }
 
@@ -80,7 +106,9 @@ const handleLogin = async ()=>{
             </View>
             
             <View style={styles.fingerPrint}>
-                <MaterialIcons  name="fingerprint" size={26} color={themeMode ? COLORS.background : COLORS.surface}/>
+                <TouchableOpacity onPress={()=>handleBioAuth}>
+                   <MaterialIcons  name="fingerprint" size={26} color={themeMode ? COLORS.background : COLORS.surface}/>
+                </TouchableOpacity>
             </View>
 
             <View>
