@@ -52,6 +52,8 @@ export const handleSubmit = async(accountKey, accountName, navigation)=>{
     }
     
 }
+
+
 export const handleUpdate = async(accountKey, accountName, navigation)=>{
     if(!accountKey || !accountName){
         Alert.alert('Please provide account name and key');
@@ -62,15 +64,22 @@ export const handleUpdate = async(accountKey, accountName, navigation)=>{
           
         const existingAccount = await AsyncStorage.getItem('accounts');
         const accounts = existingAccount ? JSON.parse(existingAccount) : [];
-        const newAccount = {appName: accountName, accountKey}
-        accounts.push(newAccount);
-        await AsyncStorage.setItem('accounts', JSON.stringify(accounts))
-        Alert.alert('Accounnt added');
-        navigation.navigate('Home');
+        const accountIndex = accounts.findIndex((item)=>{
+            item.appName === accountName
+        })
+
+        if(accountIndex !== -1){
+            accounts[accountIndex].accountKey = accountKey
+            await AsyncStorage.setItem('accounts', JSON.stringify(accounts))
+            Alert.alert('Accounnt updated');
+            navigation.navigate('Home')
+        }else{
+            Alert.alert('Account not found')
+        }
         
     } catch (err) {
         console.log(err);
-        Alert.alert("Error adding account", err.messge)
+        Alert.alert("Error adding account", err.message)
     }
     
 }
