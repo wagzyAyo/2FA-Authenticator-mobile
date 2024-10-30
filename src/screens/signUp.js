@@ -76,7 +76,7 @@ const handleSignup = async ()=>{
                     onPress={() => setPasswordVisible(!passwordVisible)} // Toggle password visibility
                 >
                     <MaterialIcons
-                        name={passwordVisible ? "visibility-off" : "visibility"}
+                        name={passwordVisible ? "visibility" : "visibility-off"}
                         size={24}
                         color={themeMode ? COLORS.background : COLORS.surface}
                     />
@@ -200,7 +200,7 @@ const getStyles =(themeMode)=> StyleSheet.create({
     btnText: {
         fontSize: SIZES.button,
         letterSpacing: 1.25,
-        color: themeMode ? COLORS.background : COLORS.surface,
+        color: COLORS.background,
         textAlign: 'center'
     },
     option: {

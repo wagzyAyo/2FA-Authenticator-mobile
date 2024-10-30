@@ -4,7 +4,7 @@ import { COLORS, SIZES } from "../styles";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ThemeContext } from "../components/Theme";
-import LocalAuthentication from 'expo-local-authentication'
+import * as LocalAuthentication from 'expo-local-authentication'
 
 export default function LoginScreen ({navigation}) {
     const {themeMode} = useContext(ThemeContext)
@@ -49,27 +49,41 @@ const handleLogin = async ()=>{
 
 useEffect(()=>{
     (async ()=>{
-        const compatible = LocalAuthentication.hasHardwareAsync();
+        const compatible = await LocalAuthentication.hasHardwareAsync();
+        console.log("supported: ", compatible)
         setIsBiometricSupported(compatible)
     })();
 }, []);
 
-const handleBioAuth = async ()=>{
+const handleBioAuth = async () => {
     const savedBiometric = await LocalAuthentication.isEnrolledAsync();
-    if(!savedBiometric){
+    console.log('Enrolled:', savedBiometric);
+    if (!savedBiometric) {
         return Alert.alert(
             "Biometric record not found",
-            "please verify your identity with your password",
-            "OK",
-        )
-    }else{
-        const bioAuth = await LocalAuthentication.authenticateAsync({
-            promptMessage: 'Login with your finger print',
-            disableDeviceFallback: true
-        })
-        console.log(bioAuth)
+            "Please verify your identity with your password",
+            [{ text: "OK" }]
+        );
+    } else {
+        try {
+            const bioAuth = await LocalAuthentication.authenticateAsync({
+                promptMessage: 'Login with your fingerprint',
+                disableDeviceFallback: true,
+            });
+            console.log("Authentication Result:", bioAuth);
+            if (bioAuth.success) {
+                Alert.alert("Biometric authentication successful!");
+                navigation.navigate('Home');
+            } else {
+                Alert.alert("Authentication failed. Please try again.");
+            }
+        } catch (error) {
+            console.log("Biometric Auth Error:", error);
+            Alert.alert("Error with biometric authentication:", error.message);
+        }
     }
-}
+};
+
 
     
     return (
@@ -98,7 +112,7 @@ const handleBioAuth = async ()=>{
                     onPress={() => setPasswordVisible(!passwordVisible)} // Toggle password visibility
                 >
                     <MaterialIcons
-                        name={passwordVisible ? "visibility-off" : "visibility"}
+                        name={passwordVisible ? "visibility" : "visibility-off"}
                         size={24}
                         color={themeMode ? COLORS.background : COLORS.surface}
                     />
@@ -106,7 +120,7 @@ const handleBioAuth = async ()=>{
             </View>
             
             <View style={styles.fingerPrint}>
-                <TouchableOpacity onPress={()=>handleBioAuth}>
+                <TouchableOpacity onPress={handleBioAuth}>
                    <MaterialIcons  name="fingerprint" size={26} color={themeMode ? COLORS.background : COLORS.surface}/>
                 </TouchableOpacity>
             </View>
