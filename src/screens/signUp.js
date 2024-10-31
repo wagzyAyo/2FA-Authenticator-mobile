@@ -52,6 +52,7 @@ const handleSignup = async ()=>{
     
     return (
         <View style={styles.container}>
+            <ScrollView>
             <View style={styles.logoContainer}>
             <Image source={require('../../assets/alpha.png')} style={styles.logoImg}/>
             </View>
@@ -127,6 +128,7 @@ const handleSignup = async ()=>{
             onPress={() => navigation.navigate('Login')}>
             Already have an account? Login
             </Text>
+            </ScrollView>
         </View>
     )
 }

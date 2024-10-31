@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect } from "react"
-import { Text, View, StyleSheet, TextInput, Image, TouchableOpacity, Alert } from "react-native"
+import { Text, View, StyleSheet, TextInput, Image, TouchableOpacity, Alert, ScrollView } from "react-native"
 import { COLORS, SIZES } from "../styles";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -47,6 +47,10 @@ const handleLogin = async ()=>{
     }
 };
 
+const fallbackDefault = ()=>{
+    Alert.alert('Login with password')
+}
+
 useEffect(()=>{
     (async ()=>{
         const compatible = await LocalAuthentication.hasHardwareAsync();
@@ -62,7 +66,8 @@ const handleBioAuth = async () => {
         return Alert.alert(
             "Biometric record not found",
             "Please verify your identity with your password",
-            [{ text: "OK" }]
+            [{ text: "OK" }],
+            ()=> fallbackDefault
         );
     } else {
         try {
@@ -88,7 +93,9 @@ const handleBioAuth = async () => {
     
     return (
         <View style={styles.container}>
+            <ScrollView>
             <View style={styles.logoContainer}>
+                
             <Image source={require('../../assets/alpha.png')} style={styles.logoImg}/>
             </View>
            
@@ -145,6 +152,7 @@ const handleBioAuth = async () => {
             <Text style={styles.navSignup} onPress={()=> navigation.navigate('SignUp')}>
                 Dont have an account? signup
             </Text>
+            </ScrollView>
         </View>
     )
 }
