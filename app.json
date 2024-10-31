@@ -41,6 +41,12 @@
           "recordAudioAndroid": true
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "67d3b225-06d0-40d4-9c13-fd377bc7acbb"
+      }
+    },
+    "owner": "wagzyayo"
   }
 }
