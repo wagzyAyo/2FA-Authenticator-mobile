@@ -51,41 +51,48 @@ const fallbackDefault = ()=>{
     Alert.alert('Login with password')
 }
 
-useEffect(()=>{
-    (async ()=>{
-        const compatible = await LocalAuthentication.hasHardwareAsync();
-        console.log("supported: ", compatible)
-        setIsBiometricSupported(compatible)
+useEffect(() => {
+    (async () => {
+        try {
+            const compatible = await LocalAuthentication.hasHardwareAsync();
+            const enrolled = await LocalAuthentication.isEnrolledAsync();
+            console.log("Biometric supported:", compatible, "Enrolled:", enrolled);
+        } catch (error) {
+            console.error("Biometric Check Error:", error);
+            Alert.alert("Error with biometric setup:", error.message);
+        }
     })();
 }, []);
 
+
 const handleBioAuth = async () => {
-    const savedBiometric = await LocalAuthentication.isEnrolledAsync();
-    console.log('Enrolled:', savedBiometric);
-    if (!savedBiometric) {
-        return Alert.alert(
-            "Biometric record not found",
-            "Please verify your identity with your password",
-            [{ text: "OK" }],
-            ()=> fallbackDefault
-        );
-    } else {
-        try {
-            const bioAuth = await LocalAuthentication.authenticateAsync({
-                promptMessage: 'Login with your fingerprint',
-                disableDeviceFallback: true,
-            });
-            console.log("Authentication Result:", bioAuth);
-            if (bioAuth.success) {
-                Alert.alert("Biometric authentication successful!");
-                navigation.navigate('Home');
-            } else {
-                Alert.alert("Authentication failed. Please try again.");
-            }
-        } catch (error) {
-            console.log("Biometric Auth Error:", error);
-            Alert.alert("Error with biometric authentication:", error.message);
+    try {
+        const savedBiometric = await LocalAuthentication.isEnrolledAsync();
+        console.log('Enrolled:', savedBiometric);
+        if (!savedBiometric) {
+            return Alert.alert(
+                "Biometric record not found",
+                "Please verify your identity with your password",
+                [{ text: "OK" }]
+            );
         }
+
+        const bioAuth = await LocalAuthentication.authenticateAsync({
+            promptMessage: 'Login with your fingerprint',
+            disableDeviceFallback: false,
+        });
+
+        console.log("Authentication Result:", bioAuth);
+
+        if (bioAuth.success) {
+            Alert.alert("Biometric authentication successful!");
+            navigation.navigate('Home');
+        } else {
+            Alert.alert("Authentication failed. Please try again.");
+        }
+    } catch (error) {
+        console.error("Biometric Auth Error:", error);
+        Alert.alert("Error with biometric authentication:", error.message);
     }
 };
 
