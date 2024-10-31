@@ -8,7 +8,7 @@ export default function NoCode({navigation}){
 
     const styles = getStyles(themeMode)
     return (
-        <View>
+        <View style={styles.container}>
             <View  style={styles.imgContainer}>
                 <Image  source={require("../../assets/noCode.png")} style={styles.img} />
             </View>
@@ -21,11 +21,11 @@ export default function NoCode({navigation}){
 }
 
 const getStyles =(themeMode) => StyleSheet.create({
-    imgContainer: {
+    container: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 300,
+        padding: 16,
     },
     img:{
         width: 200,
