@@ -87,10 +87,28 @@ const handleBioAuth = async () => {
             console.log("Authentication Result:", bioAuth);
     
             if (bioAuth.success) {
-                Alert.alert("Biometric authentication successful!");
-                navigation.navigate('Home');
+                const response = await fetch('https://twofa-authenticator.onrender.com/api/auth/bioauth', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json' 
+                    },
+                    body: JSON.stringify({
+                        result: bioAuth
+                    })
+                });
+                
+                const data = await response.json();
+                // console.log('response:', response, data)
+                if(response.status === 200){
+                    await AsyncStorage.setItem('token', JSON.stringify(data.message))
+                    Alert.alert("Biometric authentication successful!");
+                    navigation.navigate('Home');
+                }else{
+                    Alert.alert('Authentication not successful:', data.message)
+                }
+                
             } else {
-                Alert.alert("Authentication failed. Please try again.");
+                Alert.alert("Biometric Authentication failed. Please try again.");
             }
         } catch (error) {
             console.error("Biometric Auth Error:", error);
