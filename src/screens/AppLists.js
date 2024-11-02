@@ -111,16 +111,15 @@ return(
             {data.length > 0 ? 
             (data.map((app, index)=>
 
-            <TouchableOpacity key={index}  onPress={()=>handleAccountPress(app)}>
+                <TouchableOpacity style={styles.box} key={index} onPress={()=>handleAccountPress(app)}>
+                      <Text style={styles.boxText}>{app.name}</Text>
+                </TouchableOpacity>
                 
-                <View style={styles.box}>
-                    <Text style={styles.boxText}>{app.name}</Text>
-                </View>
-                
-            </TouchableOpacity>)) :
+            )) :
             (<Text style={styles.text2}>No app to show</Text>)
             
         }
+        <View style={styles.bottom}></View>
         </ScrollView>
 
 
@@ -231,5 +230,8 @@ const getStyles = (themeMode)=>StyleSheet.create({
         fontSize: SIZES.h2,
         fontWeight: 'bold',
         letterSpacing: 0.15,
+    },
+    bottom: {
+        marginTop: 32
     }
 })
