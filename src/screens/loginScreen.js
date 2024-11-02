@@ -3,11 +3,12 @@ import { Text, View, StyleSheet, TextInput, Image, TouchableOpacity, Alert, Scro
 import { COLORS, SIZES } from "../styles";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { ThemeContext } from "../components/Theme";
-import * as LocalAuthentication from 'expo-local-authentication'
+import { ThemeContext, BiometricContext } from "../components/Theme";
+import * as LocalAuthentication from 'expo-local-authentication';
 
 export default function LoginScreen ({navigation}) {
-    const {themeMode} = useContext(ThemeContext)
+    const {themeMode} = useContext(ThemeContext);
+    const {allowBiometric} = useContext(BiometricContext);
 
 const [email, setEmail] = useState("");
 const [password, setPassword] = useState("");
@@ -66,35 +67,40 @@ useEffect(() => {
 
 
 const handleBioAuth = async () => {
-    try {
-        const savedBiometric = await LocalAuthentication.isEnrolledAsync();
-        console.log('Enrolled:', savedBiometric);
-        if (!savedBiometric) {
-            return Alert.alert(
-                "Biometric record not found",
-                "Please verify your identity with your password",
-                [{ text: "OK" }]
-            );
+    if(allowBiometric){
+        try {
+            const savedBiometric = await LocalAuthentication.isEnrolledAsync();
+            console.log('Enrolled:', savedBiometric);
+            if (!savedBiometric) {
+                return Alert.alert(
+                    "Biometric record not found",
+                    "Please verify your identity with your password",
+                    [{ text: "OK" }]
+                );
+            }
+    
+            const bioAuth = await LocalAuthentication.authenticateAsync({
+                promptMessage: 'Login with your fingerprint',
+                disableDeviceFallback: false,
+            });
+    
+            console.log("Authentication Result:", bioAuth);
+    
+            if (bioAuth.success) {
+                Alert.alert("Biometric authentication successful!");
+                navigation.navigate('Home');
+            } else {
+                Alert.alert("Authentication failed. Please try again.");
+            }
+        } catch (error) {
+            console.error("Biometric Auth Error:", error);
+            Alert.alert("Error with biometric authentication:", error.message);
         }
-
-        const bioAuth = await LocalAuthentication.authenticateAsync({
-            promptMessage: 'Login with your fingerprint',
-            disableDeviceFallback: false,
-        });
-
-        console.log("Authentication Result:", bioAuth);
-
-        if (bioAuth.success) {
-            Alert.alert("Biometric authentication successful!");
-            navigation.navigate('Home');
-        } else {
-            Alert.alert("Authentication failed. Please try again.");
-        }
-    } catch (error) {
-        console.error("Biometric Auth Error:", error);
-        Alert.alert("Error with biometric authentication:", error.message);
+    }else{
+        Alert.alert(`Biometric access not granted for this app`)
     }
-};
+}
+    
 
 
     

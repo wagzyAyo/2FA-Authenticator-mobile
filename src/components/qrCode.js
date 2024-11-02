@@ -1,13 +1,18 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { View, Text, Alert, Pressable, StyleSheet } from 'react-native';
 import { CameraView} from 'expo-camera';
 import { COLORS, SIZES } from "../styles";
-import { ThemeContext } from '../components/Theme';
+import { ThemeContext, CameraContext } from '../components/Theme';
 import { handleSubmit } from '../utils/utils';
 
 export default function QrScanner({ navigation }) {
   const {themeMode} = useContext(ThemeContext);
+  const {cameraAccess} = useContext(CameraContext);
   const styles = getStyles(themeMode);
+
+  useEffect(()=>{
+    console.log(cameraAccess)
+  }, [])
 
   const handleBarCodeScanned = async({data})=>{
     const regex = /otpauth:\/\/totp\/([^:]*):([^?]*)\?secret=([^&]*)/;
@@ -21,6 +26,18 @@ export default function QrScanner({ navigation }) {
     }
   }
   
+  if(!cameraAccess){
+    Alert.alert(`Camera access not given to the app:
+      Give camera access in settings`)
+    return(
+      <View>
+         {navigation.navigate('SetUp')}
+        {Alert.alert(`Camera access not given to the app:
+          Allow camera access in settings`)}
+      </View>
+    )
+  }
+
   return (
     <View style={styles.container}>
       <CameraView 
