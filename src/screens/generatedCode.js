@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
+import { Text, View, StyleSheet, TouchableOpacity, ScrollView} from "react-native";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Feather from 'react-native-vector-icons/Feather';
 import { ThemeContext } from "../components/Theme";
@@ -54,6 +54,7 @@ export default function GenerateCode({ navigation, route }) {
 
     return (
         <View style={styles.container}>
+            <ScrollView>
             <MaterialIcons
                 name={'arrow-back'}
                 size={24}
@@ -82,6 +83,7 @@ export default function GenerateCode({ navigation, route }) {
                     </TouchableOpacity>
                 </View>
             </View>
+        </ScrollView>
         </View>
     );
 }

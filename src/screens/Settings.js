@@ -1,5 +1,16 @@
 import React, { useState, useRef, useContext } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Animated, Easing, TouchableWithoutFeedback, Image, Switch, Alert } from "react-native";
+import { View, 
+    Text,
+     StyleSheet, 
+     TouchableOpacity, 
+     Animated, 
+     Easing, 
+     TouchableWithoutFeedback, 
+     Image,
+    Switch, 
+    Alert,
+    ScrollView
+ } from "react-native";
 import { COLORS, SIZES } from "../styles";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { ThemeContext, AppContext,BiometricContext, CameraContext  } from '../components/Theme';
@@ -89,6 +100,7 @@ export default function Settings({ navigation }) {
             </View>
 
             {/* Settings content */}
+            <ScrollView>
             <View style={styles.content}>
                 <Text style={styles.heading}>Settings</Text>
                 <Text style={styles.paragraph}>
@@ -119,6 +131,7 @@ export default function Settings({ navigation }) {
                     </TouchableOpacity>
                 </View>
             </View>
+            </ScrollView>
 
             {/* Drawer menu */}
             {drawerOpen && (

@@ -1,5 +1,5 @@
 import {useState, useContext} from 'react'
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert } from "react-native";
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView } from "react-native";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { SIZES, COLORS } from "../styles";
 import { ThemeContext } from '../components/Theme';
@@ -19,6 +19,7 @@ export default function AddAccount({navigation}) {
         
 
         <View style={styles.container}>
+            <ScrollView>
             <View style={styles.title}>
             <MaterialIcons 
                 name={'arrow-back'}
@@ -48,7 +49,7 @@ export default function AddAccount({navigation}) {
                 <TouchableOpacity style={styles.btn} onPress={()=> handleSubmit(accountKey, accountName, navigation)}>
                     <Text style={styles.btnText}>Add</Text>
                 </TouchableOpacity>
-            
+             </ScrollView>
         </View>
     )
 }
