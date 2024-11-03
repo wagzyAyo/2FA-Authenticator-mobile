@@ -100,7 +100,7 @@ export default function Settings({ navigation }) {
             </View>
 
             {/* Settings content */}
-            <ScrollView>
+            
             <View style={styles.content}>
                 <Text style={styles.heading}>Settings</Text>
                 <Text style={styles.paragraph}>
@@ -131,7 +131,6 @@ export default function Settings({ navigation }) {
                     </TouchableOpacity>
                 </View>
             </View>
-            </ScrollView>
 
             {/* Drawer menu */}
             {drawerOpen && (
