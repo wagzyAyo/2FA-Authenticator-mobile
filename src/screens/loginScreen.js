@@ -13,7 +13,6 @@ export default function LoginScreen ({navigation}) {
 const [email, setEmail] = useState("");
 const [password, setPassword] = useState("");
 const [passwordVisible, setPasswordVisible] = useState("false");
-const [isBiometricSupported, setIsBiometricSupported] = useState(false)
 
 const styles = getStyles(themeMode)
 const handleLogin = async ()=>{
@@ -174,7 +173,7 @@ const handleBioAuth = async () => {
             </Text>
 
             <View>
-                <TouchableOpacity style={styles.btnStroke}>
+                <TouchableOpacity style={styles.btnStroke} onPress={()=>Alert.alert("Login with Biomtric or password")}>
                     <Image source={require('../../assets/googleIcon.png')} style={styles.icon}/>
                     <Text style={styles.btnTextStroke}>Continue with google</Text>
                 </TouchableOpacity>

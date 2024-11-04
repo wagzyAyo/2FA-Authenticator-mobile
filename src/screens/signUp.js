@@ -1,5 +1,5 @@
 import { useState, useContext } from "react"
-import { Text, View, StyleSheet, TextInput, Image, TouchableOpacity, Alert } from "react-native"
+import { Text, View, StyleSheet, TextInput, Image, TouchableOpacity, Alert, ScrollView} from "react-native"
 import { COLORS, SIZES } from "../styles";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -77,7 +77,7 @@ const handleSignup = async ()=>{
                     onPress={() => setPasswordVisible(!passwordVisible)} // Toggle password visibility
                 >
                     <MaterialIcons
-                        name={passwordVisible ? "visibility" : "visibility-off"}
+                        name={passwordVisible ? "visibility-off" : "visibility"}
                         size={24}
                         color={themeMode ? COLORS.background : COLORS.surface}
                     />
@@ -117,7 +117,7 @@ const handleSignup = async ()=>{
             </Text>
 
             <View>
-                <TouchableOpacity style={styles.btnStroke}>
+                <TouchableOpacity style={styles.btnStroke} onPress={()=>Alert.alert("Sign up with email paswword")}>
                     <Image source={require('../../assets/googleIcon.png')} style={styles.icon}/>
                     <Text style={styles.btnTextStroke}>Continue with google  
                     </Text>
