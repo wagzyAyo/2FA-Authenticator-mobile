@@ -8,6 +8,7 @@ import { handleSubmit } from '../utils/utils';
 export default function QrScanner({ navigation }) {
   const {themeMode} = useContext(ThemeContext);
   const {cameraAccess} = useContext(CameraContext);
+  const [hasScanned, setHasScanned] = useState(false)
   const styles = getStyles(themeMode);
 
   useEffect(()=>{
@@ -15,12 +16,25 @@ export default function QrScanner({ navigation }) {
   }, [])
 
   const handleBarCodeScanned = async({data})=>{
+    if(hasScanned){
+      return;
+    }
+    setHasScanned(true);
+    console.log(data)
     const regex = /otpauth:\/\/totp\/([^:]*):([^?]*)\?secret=([^&]*)/;
     const match = data.match(regex);
     if(match){
       const appName = match[1];
-      const key = match[2];
-      handleSubmit(appName, key, navigation)
+      const key = match[3];
+
+      console.log(appName);
+      console.log(key)
+    try {
+      handleSubmit(key, appName, navigation)
+    } catch (err) {
+      Alert.alert("Error adding account", err)
+    }
+      
     } else {
       Alert.alert('Invalid QR Code', 'The scanned QR code is not valid.');
     }
@@ -43,7 +57,7 @@ export default function QrScanner({ navigation }) {
       <CameraView 
         style={StyleSheet.absoluteFillObject}
         facing='back'
-        onBarcodeScanned={({data})=>{
+        onBarcodeScanned={(data)=>{
           handleBarCodeScanned(data)
         }}
       />

@@ -43,7 +43,7 @@ export const handleSubmit = async(accountKey, accountName, navigation)=>{
             Alert.alert('Accounnt added');
             navigation.navigate('Home');
         } else{
-            Alert.alert('Error adding newApp')
+            Alert.alert('Error adding newApp', data?.message)
         }
         
     } catch (err) {
