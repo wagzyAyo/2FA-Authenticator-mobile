@@ -4,10 +4,10 @@
     "slug": "2FA",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/icon-1024-1024.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/splash-4096-4096.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
