@@ -54,12 +54,15 @@ A smartphone running Android
 
 Steps
 
-Backend Setup
+## Backend Setup
 
 Clone the repository:
-
-git clone 
-cd 
+``` bash
+git clone https://github.com/wagzyAyo/2FA-Authenticator.git
+```
+``` bash
+cd 2FA-Authenticator
+```
 
 Install dependencies:
 
@@ -80,11 +83,16 @@ Start the backend server:
 ``` bash
 npm start
 ```
-Frontend Setup
 
+## Frontend Setup
+Create new window fir the front end
 clone app repo:
-
-cd ../frontend
+``` bash
+git clone https://github.com/wagzyAyo/2FA-Authenticator-mobile.git
+```
+``` bash
+cd 2FA-Authenticator-mobile
+```
 
 Install dependencies:
 
@@ -131,11 +139,10 @@ async-storage: Local data storage
 
 Home Screen
 
-
+![alt text](mockuuups-free-iphone-15-pro-hand-mockup.png)
 
 Add Account Screen
-
-
+![alt text](<mockuuups-free-iphone-15-pro-hand-mockup 2.png>)
 
 ## Future Enhancements
 
@@ -147,7 +154,7 @@ Push notification for expiring codes
 
 ## Contribution
 
-Contributions are welcome! If you’d like to improve the app or fix bugs, follow these steps:
+Contributions are welcome! If you’d like to improve the app, fix bugs or create the IOS version, follow these steps:
 
 Fork the repository
 
@@ -168,11 +175,11 @@ git push origin feature-name
 ```
 Open a pull request
 
-License
+## License
 
 This project is licensed under the MIT License.
 
-Contact
+## Contact
 
 For any inquiries, feel free to contact me:
 
