@@ -21,6 +21,7 @@ import AppLists from './src/screens/AppLists';
 import QrScanner from './src/components/qrCode';
 import UpdateApp from './src/screens/UpdateApp'
 import { AppContext, ThemeContext, ThemeProvider, AuthContext} from './src/components/Theme'; 
+import SplashScreen from './src/screens/splash';
 
 const Stack = createNativeStackNavigator();
 
@@ -39,9 +40,15 @@ function AppContent() {
   const {themeMode} = useContext(ThemeContext);
   const {setShowHome, showhome} = useContext(AppContext)
   const {authenticated, setAuthenticated} = useContext(AuthContext);
+  const [isSplashScreen, setIsSplashScreen] = useState(true)
   const styles = getStyles(themeMode);
 
   useEffect(()=>{
+    const initialize = async ()=>{
+      setTimeout(()=>{
+        setIsSplashScreen(false)
+      }, 3000)
+    }
     const loadAuth = async ()=>{
       try {
           const token = await AsyncStorage.getItem('token');
@@ -57,7 +64,7 @@ function AppContent() {
       }
       ;
   };
-
+  initialize()
   loadAuth()
   }, [])
 
@@ -68,6 +75,11 @@ function AppContent() {
       </View>
     );
   };
+  if(isSplashScreen){
+    return (
+      <SplashScreen />
+    )
+  }
 
   if (!showhome) {
     return (
